@@ -1,6 +1,10 @@
 <script setup>
 import { ref } from 'vue';
 
+/**
+ * test comment
+ */
+
 let count = ref(0)
 
 const handleClick = () => {
