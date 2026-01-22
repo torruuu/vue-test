@@ -11,9 +11,9 @@ export default defineConfig([
     extends: ["js/recommended"],
     languageOptions: { globals: globals.browser },
     rules: {
-      'no-unused-vars': ["warn"],
-      'arrow-spacing': "error",
-    }
+      "no-unused-vars": ["error"],
+      "arrow-spacing": "error",
+    },
   },
   pluginVue.configs["flat/essential"],
   {

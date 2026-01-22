@@ -1,12 +1,7 @@
 <script setup>
-import Header from './components/Header.vue';
-import Button from './components/Button.vue';
+import Button from './components/ButtonCounter.vue';
+import Header from './components/MainHeader.vue';
 
-const test = () => {
-  console.log("test4")
-}
-
-const test2 = 2
 </script>
 
 <template>
@@ -14,4 +9,6 @@ const test2 = 2
   <Button />
 </template>
 
-<style scoped></style>
+<style scoped>
+  
+</style>
