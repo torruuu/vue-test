@@ -1,8 +1,17 @@
 <script setup>
 import { ref } from 'vue';
 
+defineProps({
+  color: {
+    type: String,
+    required: true,
+    default: 'gray'
+  }
+})
+
 let count = ref(0)
 const inputText = ref('')
+const textarea = ref('')
 
 const handleClick = (event) => {
   event.stopPropagation()
@@ -10,9 +19,6 @@ const handleClick = (event) => {
 }
 const handleClick2 = () => {
   count.value--;
-}
-const handleInput = (event) => {
-  inputText.value = event.target.value
 }
 
 </script>
@@ -31,11 +37,14 @@ const handleInput = (event) => {
     </button>
   </div>
   <br>
-  <span >{{ inputText }}</span>
+  <span>{{ color }}</span>
+  <span>{{ inputText }}</span>
   <br>
 
   <form @submit.prevent="console.log('He hecho un submit')">
-    <input @input="handleInput" class="bg-gray-200" type="text">
+    <input v-model="inputText" class="bg-gray-200" type="text">
+    <textarea v-model="textarea" class="bg-gray-200"></textarea>
+    <span>{{ textarea }}</span>
     <button class="bg-gray-500 text-white p-2 rounded-md cursor-pointer">
       Enviar
     </button>
