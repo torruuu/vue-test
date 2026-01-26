@@ -14,7 +14,7 @@ import FormPadre from './components/Ejercicio1/FormPadre.vue';
   <!-- <Button color="aaaaaaaaaaaaaaaa" /> -->
   <InputValidator />
   <BoxGrid/>
-  <FormPadre />
+  <FormPadre @click="() => console.log('Ha llegado a App')" />
   
 </template>
 

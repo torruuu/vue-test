@@ -11,17 +11,21 @@
 
   FormHijoo({ input: 'aaa' })
 
+  function handleClick() {
+    inputText.value= "";
+  }
+
 
 </script>
 
 <template>
 
   <div>
-    <input v-model="inputText" class="border-2 bg-amber-300">
+    <input @click.stop v-model="inputText" class="border-2 bg-amber-300">
     
+    <FormHijo :input="inputText" @click="handleClick" />
   </div>
-
-  <FormHijo :input="inputText" />
+  
 
 
 </template>
