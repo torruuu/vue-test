@@ -23,7 +23,7 @@
   <div>
     <input @click.stop v-model="inputText" class="border-2 bg-amber-300">
     
-    <FormHijo :input="inputText" @click="handleClick" />
+    <FormHijo :clear-input="handleClick" :input="inputText"/>
   </div>
   
 

@@ -1,15 +1,12 @@
 <script setup>
 
 defineProps({
-  input: String
+  input: String,
+  clearInput: { type: Function, required: true }
 })
 
-const boton = document.querySelector('button');
-
-const handleClick = (event) => {
-  console.log(event)
-}
-boton.addEventListener("click", handleClick)
+// const boton = document.querySelector('button');
+// boton.addEventListener("click", handleClick)
 
 </script>
 
@@ -20,7 +17,7 @@ boton.addEventListener("click", handleClick)
       {{ input }} 
     </span>
 
-    <button class="bg-gray-300 border" @click="handleClick">Borrar</button>
+    <button @click="clearInput" class="bg-gray-300 border">Borrar</button>
   </div>
   
 

@@ -5,11 +5,13 @@ const nota = ref("");
 const lista = ref([]);
 
 function add () {
-  
   lista.value.push(nota.value);
-  console.log(lista);
-  
+  nota.value = "";
+}
 
+function deleteItem (itemIndex) {
+  // ['test', 'gato', 'dormir']
+  lista.value.splice(itemIndex, 1)
 }
 
 // if (lista.length > 0) {
@@ -29,7 +31,10 @@ function add () {
     </form>
     <span>
       <ul v-if="lista.length > 0" class="list-disc">
-        <li v-for="(item, index) in lista" :key="index">{{ `${index} - ${item}` }}.</li>
+        <div v-for="(item, index) in lista" class="flex gap-2" :key="index">
+          <li>{{ `${index} - ${item}` }}.</li>
+          <button class="bg-red-700 p-2 py-1 font-semibold rounded-lg" @click="() => deleteItem(index)" id="btn2">X</button>
+        </div>
       </ul>
       <p v-else>Lista vacia.</p>
     </span>
