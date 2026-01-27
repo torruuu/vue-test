@@ -30,10 +30,10 @@ function deleteItem (itemIndex) {
       <button id="btn" class="bg-green-500 p-2">Add</button>
     </form>
     <span>
-      <ul v-if="lista.length > 0" class="list-disc">
-        <div v-for="(item, index) in lista" class="flex gap-2" :key="index">
+      <ul v-if="lista.length > 0" class="rounded-lg bg-gray-300 p-4 border w-3xl flex-col flex items-center">
+        <div v-for="(item, index) in lista" class="flex gap-2 rounded-lg bg-gray-400 p-2 border w-xs items-center justify-between" :key="index">
           <li>{{ `${index} - ${item}` }}.</li>
-          <button class="bg-red-700 p-2 py-1 font-semibold rounded-lg" @click="() => deleteItem(index)" id="btn2">X</button>
+          <button class="bg-red-700 p-2 py-1 font-semibold rounded-full" @click="() => deleteItem(index)" id="btn2">X</button>
         </div>
       </ul>
       <p v-else>Lista vacia.</p>
