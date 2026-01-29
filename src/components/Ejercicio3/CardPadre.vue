@@ -4,7 +4,8 @@ const cartas = [
   {
     id: 1,
     name: "Juan",
-    color: "Azul"
+    color: "Azul",
+    role: 'admin'
   },
   {
     id: 2,
@@ -20,7 +21,7 @@ const cartas = [
 
 </script>
 <template>
-  <CardHijo v-for="carta in cartas" :key="carta.id" :id="carta.id" :name="carta.name" :color="carta.color" />
+  <CardHijo v-for="carta in cartas" :key="carta.id" :id="carta.id" :name="carta.name" :color="carta.color" :role="carta.role" />
   
 
 
