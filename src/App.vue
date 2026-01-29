@@ -5,7 +5,8 @@ import Header from './components/MainHeader.vue';
 // import BoxGrid from './components/BoxGrid.vue';
 // import FormPadre from './components/Ejercicio1/FormPadre.vue';
 // import ToDo from './components/Ejercicio2/ToDo.vue';
-import CardPadre from './components/Ejercicio3/CardPadre.vue';
+// import CardPadre from './components/Ejercicio3/CardPadre.vue';
+import ParentForm from './components/Ejercicio4/ParentForm.vue';
 
 
 
@@ -18,7 +19,8 @@ import CardPadre from './components/Ejercicio3/CardPadre.vue';
   <BoxGrid/> -->
   <!-- <FormPadre @click="() => console.log('Ha llegado a App')" /> -->
   <!-- ToDo/> -->
-  <CardPadre />
+  <!--CardPadre /> -->
+  <ParentForm />
 
   
 </template>
