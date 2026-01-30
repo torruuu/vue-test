@@ -15,15 +15,12 @@ function marcada() {
 </script>
 
 <template>
-    <div class="flex justify-between">
-        <li class="contents">
-            <span :class="estado ? 'line-through' : ''">{{ nombre }}</span>
+    <div class="w-2xl">
+        <li class="flex justify-between items-center w-full">
+            <span :class="estado && 'line-through'">{{ nombre }}</span>
             <button @click="marcada"
                 :class="estado ? 'bg-gray-500 border rounded-sm p-2 ml-2' : 'bg-green-500 border-green-900 rounded-sm p-2 ml-2'">
                 {{ estado ? 'Completada' : 'COMPLETAR' }}
-            </button>
-            <button>
-
             </button>
         </li>
     </div>
