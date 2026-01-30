@@ -1,40 +1,31 @@
 <script setup>
+import { ref } from "vue"
+import HijoComp from "./HijoComp.vue"
 
-import HijoComp from './HijoComp.vue';
-
-const tareas = [
-    { id: 1, title: "Comer", estado: true},
-    { id: 2, title: "Dormir", estado: false}]
-
-const tareasPendientes = [];
-const tareasTerminadas = [];
-
-
- function addTarea () {
-        if(tareas.estado===true) {
-            tareasPendientes.push
-        }
-        else {tareasTerminadas.push}
-    }
-
-    
-
-
-
-
-
-
+const tareas = ref([
+  { id: 1, title: "Comer", done: true },
+  { id: 2, title: "Dormir", done: false },
+])
 </script>
+
 <template>
-    <div>
-    <HijoComp :tareasPendientes="tareasPendientes" :tareasTerminadas="tareasTerminadas"/>
-        
-    
-
-
-
+  <div>
+    <h1>Tareas completadas.</h1>
+    <div v-for="tarea of tareas" :key="tarea.id">
+      <HijoComp
+        v-if="tarea.done"
+        :title="tarea.title"
+        :done="tarea.done"
+      />
     </div>
 
-
-
+    <h1>Tareas pendientes.</h1>
+    <div v-for="tarea of tareas" :key="tarea.id">
+      <HijoComp
+        v-if="!tarea.done"
+        :title="tarea.title"
+        :done="tarea.done"
+      />
+    </div>
+  </div>
 </template>
