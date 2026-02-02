@@ -7,10 +7,14 @@ const props = defineProps({        // Meto los props en una variable para poder 
 })
 
 // Hay que declarar el evento personalizado
-const emit = defineEmits(['marcar']);
+const emit = defineEmits(['marcar', 'borrado']);
 // Cuando hacemos click capturamos el evento y llamamos a esta funcion
 function marcada() {
     emit('marcar', props.id)
+}
+//Funcion para eliminar tareas
+function borrar() {
+    emit('borrado', props.id)
 }
 </script>
 
@@ -18,10 +22,13 @@ function marcada() {
     <div class="w-2xl">
         <li class="flex justify-between items-center w-full">
             <span :class="estado && 'line-through'">{{ nombre }}</span>
-            <button @click="marcada"
-                :class="estado ? 'bg-gray-500 border rounded-sm p-2 ml-2' : 'bg-green-500 border-green-900 rounded-sm p-2 ml-2'">
-                {{ estado ? 'Completada' : 'COMPLETAR' }}
-            </button>
+            <div>
+                <button @click="marcada"
+                    :class="estado ? 'bg-gray-500  rounded-l-lg p-2' : 'bg-green-500 rounded-l-lg p-2'">
+                    {{ estado ? 'Completa!' : 'Completar' }}
+                </button>
+                <button @click="borrar" class="bg-red-300 border-red-900 rounded-r-lg p-2">Borrar</button>
+            </div>
         </li>
     </div>
 </template>
