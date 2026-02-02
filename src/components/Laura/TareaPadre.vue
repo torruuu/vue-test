@@ -42,13 +42,13 @@ function marcar(id) {
         <TareaHija @agregar-tarea="agregarTarea" />
         <h1 class="mb-20 mt-6 text-xl underline">Lista de tareas:</h1>
         <ul v-for="tarea in tareas" :key="tarea.id">
-            <TareaHijo :id="tarea.id" :nombre="tarea.nombre" :estado="tarea.estado" @marcar="marcar"
+            <TareaHijo v-if="!tarea.estado" :id="tarea.id" :nombre="tarea.nombre" :estado="tarea.estado" @marcar="marcar"
                 @borrado="eliminarTarea" />
         </ul>
         <h2 class="mt-6 text-xl underline">Tareas completadas:</h2>
-        <ul v-for="tarea in tareas" :key="tarea.id" class="self-start ml-58">
-            <span v-if="tarea.estado">{{ tarea.nombre }}</span>
-            <!--<button @borrado="eliminarTarea">Borrar</button>-->
+        <ul v-for="tarea in tareas" :key="tarea.id">
+            <TareaHijo v-if="tarea.estado" :id="tarea.id" :nombre="tarea.nombre" :estado="tarea.estado"
+                @borrado="eliminarTarea" />
         </ul>
     </div>
 </template>
