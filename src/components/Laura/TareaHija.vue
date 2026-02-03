@@ -19,8 +19,7 @@ function agregarTarea() {
 
 <template>
     <div class="flex flex-col items-center">
-        <h1 class="text-3xl underline">To do list.</h1>
-        <form @submit.prevent="agregarTarea" class="flex justify-center mt-10">
+        <form @submit.prevent="agregarTarea" class="flex justify-center">
             <input v-model="nuevaTarea" id="entrada" class="bg-amber-200 border pl-2 rounded-l-lg"
                 placeholder="Añade una tarea.">
             <button class="bg-amber-400 p-2 border rounded-r-lg">Agregar</button>

@@ -1,6 +1,7 @@
 <script setup>
 import TareaHijo from "./TareaHijo.vue"
 import TareaHija from "./TareaHija.vue"
+import TareaBuscador from "./TareaBuscador.vue"
 import { ref } from "vue"
 
 const tareas = ref([
@@ -39,11 +40,14 @@ function marcar(id) {
 
 <template>
     <div class="flex flex-col items-center gap-4 mt-22">
+        <ul>
+            <TareaBuscador />
+        </ul>
         <TareaHija @agregar-tarea="agregarTarea" />
         <h1 class="mb-20 mt-6 text-xl underline">Lista de tareas:</h1>
         <ul v-for="tarea in tareas" :key="tarea.id">
-            <TareaHijo v-if="!tarea.estado" :id="tarea.id" :nombre="tarea.nombre" :estado="tarea.estado" @marcar="marcar"
-                @borrado="eliminarTarea" />
+            <TareaHijo v-if="!tarea.estado" :id="tarea.id" :nombre="tarea.nombre" :estado="tarea.estado"
+                @marcar="marcar" @borrado="eliminarTarea" />
         </ul>
         <h2 class="mt-6 text-xl underline">Tareas completadas:</h2>
         <ul v-for="tarea in tareas" :key="tarea.id">
