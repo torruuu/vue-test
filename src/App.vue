@@ -7,7 +7,8 @@
 // import ToDo from './components/Ejercicio2/ToDo.vue';
 // import CardPadre from './components/Ejercicio3/CardPadre.vue';
 //import ParentForm from './components/Ejercicio4/ParentForm.vue';
-import PadreComp from './components/Juanal/PadreComp.vue';
+//import PadreComp from './components/Juanal/PadreComp.vue';
+import Padre2Comp from './components/Juanal/Padre2Comp.vue';
 
 
 
@@ -22,7 +23,7 @@ import PadreComp from './components/Juanal/PadreComp.vue';
   <!-- ToDo/> -->
   <!--CardPadre /> -->
   <!--ParentForm -->
-  <PadreComp />
+  <Padre2Comp />
 
 
   
