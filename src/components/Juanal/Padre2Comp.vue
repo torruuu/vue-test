@@ -3,6 +3,7 @@ import { ref } from "vue"
 import Hijo2Comp from "./Hijo2Comp.vue";
 import AddTask from "./AddTask.vue"
 import searchTask from "./searchTask.vue";
+/*import searchTask from "./searchTask.vue";*/
 
 const tareas = ref([
     { id: 1, title: "Comer", done: true },
