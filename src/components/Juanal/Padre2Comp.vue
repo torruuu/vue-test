@@ -1,14 +1,41 @@
 <script setup>
-import { ref } from "vue"
+import { computed, ref } from "vue"
 import Hijo2Comp from "./Hijo2Comp.vue";
 import AddTask from "./AddTask.vue"
-import searchTask from "./searchTask.vue";
+import SearchTask from "./SearchTask.vue";
 
 const tareas = ref([
     { id: 1, title: "Comer", done: true },
     { id: 2, title: "Dormir", done: false },
     { id: 3, title: "Estudiar", done: true }
 ])
+
+const tareasPendientes = computed(getUndoneTask);
+const tareasTerminadas = computed(getDoneTasks);
+
+function getDoneTasks () {
+    const tareasTerminadas = []
+    for (let tarea of tareas.value) {
+        if(tarea.done===true) {
+             tareasTerminadas.push(tarea);
+        }
+    }
+    return tareasTerminadas;
+}
+
+function getUndoneTask () {
+    const tareasPendientes =[];
+    for (let tarea of tareas.value) {
+        if(tarea.done===false) {
+             tareasPendientes.push(tarea);
+        }
+    }
+    return tareasPendientes;
+}
+
+
+
+
 // Funcion que elimina tarea del array Tareas.
 function eliminarTarea(id) {
     tareas.value = tareas.value.filter(tarea => tarea.id !== id);
@@ -42,14 +69,16 @@ function add(title) {
 
         <h1>Tareas pendientes</h1>
 
-        <div v-for="tarea in tareas" :key="tarea.id">
-            <Hijo2Comp v-if="!tarea.done" :id="tarea.id" :title="tarea.title" :done="tarea.done" @enviar="enviar"
+        <div v-for="tarea in tareasPendientes" :key="tarea.id">
+            <Hijo2Comp :id="tarea.id" :title="tarea.title" :done="tarea.done" @enviar="enviar"
                 @borrar="eliminarTarea" />
         </div>
         <h1>Tareas completadas</h1>
-        <div v-for="tarea in tareas" :key="tarea.id">
-            <Hijo2Comp v-if="tarea.done" :id="tarea.id" :title="tarea.title" :done="tarea.done"
+        <div v-for="tarea in tareasTerminadas" :key="tarea.id">
+            <Hijo2Comp :id="tarea.id" :title="tarea.title" :done="tarea.done"
                 @borrar="eliminarTarea" />
         </div>
+
     </div>
 </template>
+COMPONENTE BUSQUEDA, QUERMEOS QUE AL ESCRIBIR EN EL INPUT DE BUSQUEDA FILTRE POR NOMBRE DE TAREA, SI COINCIDE CON ALGUNA DE LAS GUARDADAS ME MUESTRAS LA LISTA DE COINCIDENCIAS. SI NO COINCIDE NO ME MUESTRAS NADA (LISTA VACIA) UN MENSAJE ALERT DE NO HAY COINCIDENCIAS.
