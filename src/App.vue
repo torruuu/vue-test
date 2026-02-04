@@ -1,8 +1,10 @@
 <script setup>
+import CounterParent from './components/Ejercicio6/CounterParent.vue';
+
 // import Button from './components/ButtonCounter.vue';
 // import ComputedFilter from './components/Ejercicio5/ComputedFilter.vue';
 //import CounterMessage from './components/Ejercicio5/CounterMessage.vue';
-import ComputedPrice from './components/Ejercicio5/ComputedPrice.vue';
+//import ComputedPrice from './components/Ejercicio5/ComputedPrice.vue';
 import Header from './components/MainHeader.vue';
 // import InputValidator from './components/InputValidator.vue';
 // import BoxGrid from './components/BoxGrid.vue';
@@ -27,7 +29,8 @@ import Header from './components/MainHeader.vue';
   <!--ParentForm /> -->
   <!--CounterMessage /> -->
   <!-- <ComputedFilter /> -->
-   <ComputedPrice />
+   <!--ComputedPrice /> -->
+   <CounterParent />
 
   
 </template>
