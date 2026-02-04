@@ -9,23 +9,24 @@ const tareas = ref([
     { id: 2, nombre: "Terminar los ejercicios de Vue", estado: false },
     { id: 3, nombre: "Hacer la compra", estado: false },
 ])
-let tareaCoincide = false;
+
+const tareaBuscada = ref("");
 const tareasTerminadas = computed(recuperarCompl);
 const tareasPendientes = computed(recuperarPend);
-const tareasCoincidenComputed = computed((tareaBuscada) => {
+const tareasCoincidenComputed = computed(() => {
     const tareasCo = [];
+    if(tareaBuscada.value === ""){
+        return tareasCo;
+    }
     for (let tarea of tareas.value) {
-        if (tarea.nombre.includes(tareaBuscada)) {
+        if (tarea.nombre.includes(tareaBuscada.value)) {
             tareasCo.push(tarea.nombre)
-            tareaCoincide = true;
         }
     } return tareasCo
 });
 
-function tareafiltrada() {
-    if (tareaCoincide) {
-        return tareasCoincidenComputed
-    }
+function buscar(inputTarea) {
+     tareaBuscada.value = inputTarea;
 }
 
 function recuperarPend() {
@@ -79,10 +80,10 @@ function marcar(id) {
 <template>
     <div class="flex flex-col items-center gap-4 mt-22">
         <ul>
-            <TareaBuscador @buscar-tarea="tareafiltrada" />
+            <TareaBuscador @buscar-tarea="buscar" />
         </ul>
-        <span v-if="tareaCoincide">{{ tareasCoincidenComputed }}</span>
-        <div v-if="!tareaCoincide">
+        <span v-if="tareasCoincidenComputed.length > 0">{{ tareasCoincidenComputed }}</span>
+        <div v-else>
             <TareaHija @agregar-tarea="agregarTarea" />
             <h1 class="mb-20 mt-6 text-xl underline">Lista de tareas:</h1>
             <ul v-for="tarea in tareasPendientes" :key="tarea.id">
