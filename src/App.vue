@@ -1,14 +1,30 @@
 <script setup>
+// import Button from './components/ButtonCounter.vue';
+//import Header from './components/MainHeader.vue';
+// import InputValidator from './components/InputValidator.vue';
+// import BoxGrid from './components/BoxGrid.vue';
+// import FormPadre from './components/Ejercicio1/FormPadre.vue';
+// import ToDo from './components/Ejercicio2/ToDo.vue';
+// import CardPadre from './components/Ejercicio3/CardPadre.vue';
+//import ParentForm from './components/Ejercicio4/ParentForm.vue';
+//import PadreComp from './components/Juanal/PadreComp.vue';
+import Padre2Comp from './components/Juanal/Padre2Comp.vue';
 
-import TareaPadre from './components/Laura/TareaPadre.vue';
 
 
 </script>
 
 <template>
-  <div>
-    <TareaPadre />
-  </div>
+  <!--Header />
+  <!- <Button color="aaaaaaaaaaaaaaaa" /> -->
+  <!-- <InputValidator />
+  <BoxGrid/> -->
+  <!-- <FormPadre @click="() => console.log('Ha llegado a App')" /> -->
+  <!-- ToDo/> -->
+  <!--CardPadre /> -->
+  <!--ParentForm -->
+  <Padre2Comp />
+
 
 </template>
 
