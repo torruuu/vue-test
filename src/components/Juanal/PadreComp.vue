@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue"
 import HijoComp from "./HijoComp.vue"
-import AddTask from "./AddTask.vue"
+import AddTask from "./AddTask2.vue"
 
 
 

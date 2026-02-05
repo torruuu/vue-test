@@ -1,8 +1,8 @@
 <script setup>
 import { computed, ref } from "vue"
 import Hijo2Comp from "./Hijo2Comp.vue";
-import AddTask from "./AddTask.vue"
-import SearchTask from "./SearchTask.vue";
+import AddTask from "./AddTask2.vue"
+import SearchTask from "./SearchTask2.vue";
 
 const tareas = ref([
     { id: 1, title: "Comer", done: true },
@@ -83,7 +83,7 @@ function add(title) {
 
 //Contador que permita modificar el limite que hemos establecido anteriormente. Si pulso y bajo a 9, eso tiene que modificar el add. tarea anterior para solo permitirme nueve.
 const contadorLimite = ref(5);
-const limit = 10;
+const limit = 50;
 
 
 
@@ -98,6 +98,9 @@ function sumar () {
     }}
 
 function restar () {
+    if(tareas.value.length === contadorLimite.value) {
+        return
+    }
     if(contadorLimite.value === 0){
         return alert("No podemos bajar más el contador.")
     }
