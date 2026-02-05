@@ -72,6 +72,7 @@ function sumar() {
 }
 
 function restar() {
+    if (limit.value === contadorTarea.value) return
     limit.value--
 }
 //Declaro la funcion marcar que escucha el evento personalizado
