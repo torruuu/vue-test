@@ -26,9 +26,6 @@ import Padre2Comp from './components/Juanal/Padre2Comp.vue';
   <Padre2Comp />
 
 
-  
 </template>
 
-<style scoped>
-  
-</style>
+<style scoped></style>
