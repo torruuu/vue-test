@@ -13,7 +13,7 @@ function busqueda () {
 <template>
 
     <div>
-        <input v-model="searchText" type="text" id="search" name="search" placeholder="Introduzca su búsqueda..." class="bg-grey-200 border-4 rounded-sm p-2">
+        <input v-model.trim="searchText" type="text" id="search" name="search" placeholder="Introduzca su búsqueda..." class="bg-grey-200 border-4 rounded-sm p-2">
         <button @click="busqueda" class="bg-green-200 border-4 rounded-sm p-2">Search</button>
     
     </div>

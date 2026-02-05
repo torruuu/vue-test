@@ -32,28 +32,31 @@ function getUndoneTask () {
     }
     return tareasPendientes;
 }
-// VARIABLE EN EL INPUT. FUNCION COINCIDENCIA QUE RECORRE EL ARRAY TAREAS Y SI COINCIDE EL TITULO CON EL VALOR DEL INPUT (AL PULSAR BOTON)
-//ME LO METES EN UN ARRAY QUE SE LLAMA TAREAS IGUALES.
-//LUEGO QUIERO MODIFICAR TEMPLATE Y QUE ME MUESTRE ESE ARRAY SI LA FUNCION COINCIDENCIA SE CUMPLE Y SI NO QUE ME DEJE LO QUE TIENE Y ME SALTE UN ALERT CON MENSAJE.
-const searchText = ref("");
-const tareasIguales = computed(coincidencia);
-const busqueda = ref(false);
 
-function coincidencia () {
+const searchText = ref("");
+
+const tareasIguales = computed(() => {
     const tareasIguales = [];
+    if(searchText.value === "") {
+        return [];
+    }
+
     for (let tarea of tareas.value){
-        if(tarea.title===searchText.value) {
+        if(tarea.title.toLowerCase().includes(searchText.value.toLowerCase().trim())) {
             tareasIguales.push(tarea)
         }
+        
+    }
+    if(tareasIguales.length === 0) {
+        alert("No existen coincidencias.")
     }
     return tareasIguales;
+})
+
+function buscar (t) {
+    searchText.value = t;
 }
-function buscar () {
-    busqueda.value = true;
-    tareasIguales.value = tareas.value.filter (
-        tarea => tarea.title === searchText.value
-    )
-}
+
 /* CREAMOS SEARCHTEXT REACTIVA, CAPTURADA EN TEMPLATE PARA QUE LO PINTE EL INPUT, CREAMOS FUNCION REACTIVA COINCIDENCIA
 QUE ME RECORRE EL ARRAY PRINCIPAL TAREAS Y SI COINCIDE EL NOMBRE DE ALGUNA DE LAS TAREAS CON LA BARRA DE BUSQUEDA LO ALMACENA
 EN EL ARRAY tareasIGUALES. LUEGO CREO UNA FUCION BUSCAR-ASOCIADA AL CLICK DEL BOTON. ESTA FUNCION COMPARA EL ARRAY, CAPTA SI....*/
@@ -107,6 +110,7 @@ function restar () {
 
 <template>
     <div  class="flex flex-col min-h-screen gap-6 p-6">
+
     <div>
         <div>
             <h1>Contador Limite</h1>
@@ -115,8 +119,14 @@ function restar () {
             <button @click="sumar" class="bg-green-200 rounded p-2">+</button>
         </div>
 
+
+    <div v-if="tareasIguales.length !== 0">
+        {{ tareasIguales }}
+    </div>
+    <div v-else>
+        
         <h1>Barra de búsqueda</h1>
-            <searchTask v-model="searchText" @click="buscar"/>
+            <SearchTask @add="buscar"/>
         <h1>Añade nueva tarea:</h1>
 
         <AddTask @add-tarea="add" />
@@ -133,6 +143,7 @@ function restar () {
                 @borrar="eliminarTarea" />
         </div>
 
+    </div>
     </div>
     </div>
     
