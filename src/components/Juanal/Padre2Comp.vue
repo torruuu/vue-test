@@ -68,18 +68,52 @@ function enviar(id) {
 
 }
 function add(title) {
+    if(tareas.value.length < contadorLimite.value) {
     tareas.value.push({
         id: Date.now(),
         title,
-        done: false
-    })
-}
+        done: false})}
+    else {
+        return alert("Has llegado al límite de tareas.")
+    }
+    }
+
+//Contador que permita modificar el limite que hemos establecido anteriormente. Si pulso y bajo a 9, eso tiene que modificar el add. tarea anterior para solo permitirme nueve.
+const contadorLimite = ref(5);
+const limit = 10;
+
+
+
+
+function sumar () {
+    if(contadorLimite.value !== limit) {
+        contadorLimite.value++;
+    } 
+    else {
+        
+        return alert("Has llegado al limite.")
+    }}
+
+function restar () {
+    if(contadorLimite.value === 0){
+        return alert("No podemos bajar más el contador.")
+    }
+    else{
+        contadorLimite.value--;
+    }}
+
 
 </script>
 
 <template>
     <div  class="flex flex-col min-h-screen gap-6 p-6">
     <div>
+        <div>
+            <h1>Contador Limite</h1>
+            <button @click="restar" class="bg-red-200 rounded p-2">-</button>
+            <span>{{ contadorLimite }}</span>
+            <button @click="sumar" class="bg-green-200 rounded p-2">+</button>
+        </div>
 
         <h1>Barra de búsqueda</h1>
             <searchTask v-model="searchText" @click="buscar"/>
