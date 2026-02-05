@@ -20,12 +20,12 @@ function borrar() {
 
 <template>
     <div class="w-2xl">
-        <li class="flex justify-between items-center w-full">
+        <li class="flex justify-between items-center w-full border rounded-lg pl-2">
             <span :class="estado && 'line-through'">{{ nombre }}</span>
             <div>
-                <button v-if="!estado" @click="marcada" class="bg-green-400 rounded-l-lg p-2">Completar
+                <button v-if="!estado" @click="marcada" class="bg-green-400 border rounded-l-lg p-2">Completar
                 </button>
-                <button @click="borrar" class="bg-red-300 border-red-900 rounded-r-lg p-2">Borrar</button>
+                <button @click="borrar" class="bg-red-300 border-red-900 border rounded-r-lg p-2">Borrar</button>
             </div>
         </li>
     </div>
