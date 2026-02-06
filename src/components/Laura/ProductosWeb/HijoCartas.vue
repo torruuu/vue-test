@@ -1,11 +1,9 @@
 <script setup>
-import { ref } from 'vue'
-const props = defineProps(
-    {
-        id: Number,
-        nombre: String,
-        precio: Number
-    });
+const props = defineProps({
+    id: Number,
+    nombre: String,
+    precio: Number
+});
 
 // Evento personalizado para añadir productos
 const emit = defineEmits(['añadir']);

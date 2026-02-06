@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import HijoCartas from './HijoCartas.vue';
+import HijoCarro from './HijoCarro.vue';
 
 
 
@@ -25,28 +26,28 @@ function carroEstado() {
         return listaCarro.value;
     }
 }
+// Si la cantidad del producto es 0 crea el nuevo producto y sino suma una cantidad
+// Spread operator
 
 function añadir(producto) {
     listaCarro.value.push(producto)
-
-    return listaCarro;
 }
 
 </script>
 <template>
     <div>
-        <div class="bg-gray-200 w-full">
-            <button @click="carroEstado" class="flex justify-end">
+        <div class="flex flex-col items-end bg-gray-200 w-full">
+            <button @click="carroEstado" class="pr-2">
                 🛒 {{ listaCarro.length }}
             </button>
-            <span v-if="!carroVacio">
-                {{ listaCarro }}
+            <span v-if="!carroVacio" >
+                <HijoCarro :lista="listaCarro" class="flex flex-col items-end pr-2"/>
             </span>
 
         </div>
         <div class="min-h-screen flex items-center justify-center">
             <div class="grid grid-cols-2 gap-6">
-                <HijoCartas v-for="producto in productos" :key="producto.id" :nombre="producto.nombre"
+                <HijoCartas v-for="producto in productos" :key="producto.id" :id="producto.id" :nombre="producto.nombre"
                     :precio="producto.precio" @añadir="añadir" />
             </div>
         </div>
