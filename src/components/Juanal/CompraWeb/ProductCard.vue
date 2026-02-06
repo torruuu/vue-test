@@ -21,10 +21,10 @@ function enviarProducto () {
 </script>
 <template>
     <div class="flex items-center justify-center">
-<div class="flex flex-col bg-grey-700 p-5 border-black border rounded gap-4 text-center items-center">
+<div class="flex flex-col p-5 border-black border-4 rounded h-64 items-center justify-between">
     <div>{{ name }}</div>
     <div>{{ price }} €</div>
-    <div></div>
+    <img :src="imagen" :alt="`imagen ${name}`" class="w-15">
     <button @click="enviarProducto" class="bg-cyan-200 border rounded p-2">Add</button>
 </div>
 </div>
