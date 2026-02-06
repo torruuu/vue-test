@@ -1,5 +1,5 @@
 <script setup>
-import TempPadre from './components/Ejercicio7/TempPadre.vue';
+import PadreProductos from './components/Laura/ProductosWeb/PadreProductos.vue';
 
 // import Button from './components/ButtonCounter.vue';
 //import Header from './components/MainHeader.vue';
@@ -26,7 +26,7 @@ import TempPadre from './components/Ejercicio7/TempPadre.vue';
   <!--CardPadre /> -->
   <!--ParentForm -->
   <!--Padre2Comp -->
-  <TempPadre />
+  <PadreProductos />
 
 
 </template>
