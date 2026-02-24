@@ -1,35 +1,16 @@
 <script setup>
-import {ref, computed} from "vue";
-
-const props = defineProps({
-    colorBase: String
- })
+import {ref} from "vue";
 
 //Variable reactiva que recoge el INPUT con v-model y se manda al PADRE.
-const inputText = ref();
-const inputText2 = ref();
-const colorMezclado = computed(() => {
-  const parse = (hex) => {
-    const h = hex.replace('#', '');
-    return {
-      r: parseInt(h.substring(0, 2), 16),
-      g: parseInt(h.substring(2, 4), 16),
-      b: parseInt(h.substring(4, 6), 16),
-    };
-  };
-  const c1 = parse(inputText.value);
-  const c2 = parse(inputText2.value);
-  const r = Math.round((c1.r + c2.r) / 2).toString(16).padStart(2, '0');
-  const g = Math.round((c1.g + c2.g) / 2).toString(16).padStart(2, '0');
-  const b = Math.round((c1.b + c2.b) / 2).toString(16).padStart(2, '0');
-  return `#${r}${g}${b}`;
-});
-//EMIT - EVENTO PERSONALIZADO. CAMBIO DE COLOR.
+const inputText = ref('#ffffff');
+const inputText2 = ref('#ffffff');
+
+//EMIT - EVENTO PERSONALIZADO. CAMBIO DE COLOR. dos
 const emit = defineEmits(['cambioColor']);
 //FUNCION enviarOrden, es la que recoge el CLICK. Enviamos al padre el EVENTO PERSONALIZADO Y EL VALOR DEL INPUT PARA PODER CAMBIAR EL COLOR.
 
 function enviarOrden() {
-  emit ('cambioColor', colorMezclado.value, props.colorBase);
+  emit ('cambioColor', inputText.value, inputText2.value);
 }
 
 </script>
