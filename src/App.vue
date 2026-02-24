@@ -1,5 +1,5 @@
 <script setup>
-import PadreProductos from './components/Laura/ProductosWeb/PadreProductos.vue';
+import PadreView from './components/Laura/Ej_color/PadreView.vue';
 
 // import Button from './components/ButtonCounter.vue';
 //import Header from './components/MainHeader.vue';
@@ -26,7 +26,7 @@ import PadreProductos from './components/Laura/ProductosWeb/PadreProductos.vue';
   <!--CardPadre /> -->
   <!--ParentForm -->
   <!--Padre2Comp -->
-  <PadreProductos />
+  <PadreView />
 
 
 </template>
