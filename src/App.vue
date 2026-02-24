@@ -1,5 +1,7 @@
 <script setup>
-import ConsumerWeb from './components/Juanal/CompraWeb/ConsumerWeb.vue';
+import ColorPadre from './components/Juanal/CambioColor/ColorPadre.vue';
+
+//import ConsumerWeb from './components/Juanal/CompraWeb/ConsumerWeb.vue';
 
 
 
@@ -7,7 +9,7 @@ import ConsumerWeb from './components/Juanal/CompraWeb/ConsumerWeb.vue';
 
 <template>
   
-  <ConsumerWeb />
+  <ColorPadre />
 
 
 </template>

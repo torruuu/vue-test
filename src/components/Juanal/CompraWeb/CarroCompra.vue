@@ -1,6 +1,6 @@
 <script setup>
 defineProps({
-  Carro : Array,
+  carro : Array,
   cantidadProducto : Number
 
   })
