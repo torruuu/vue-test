@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import HijoView from './HijoView.vue';
+import Hijo2View from './Hijo2View.vue';
 
 const background = ref('#F2C750');
 const background2 = ref('#49CF3A');
@@ -27,7 +28,7 @@ function colorMixer(rgb1, rgb2, amountToMix) {
     var r = colorChannelMixer(rgb1[0], rgb2[0], amountToMix);
     var g = colorChannelMixer(rgb1[1], rgb2[1], amountToMix);
     var b = colorChannelMixer(rgb1[2], rgb2[2], amountToMix);
-    return "rgb(" + r + "," + g + "," + b + ")";
+    return '#' + r.toString(16).padStart(2, '0') + g.toString(16).padStart(2, '0') + b.toString(16).padStart(2, '0');
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -45,11 +46,11 @@ function changeColor2(color2) {
     <div class="flex flex-col items-center">
         <div :style="{ backgroundColor: mixBackground }"
             class="flex flex-col items-center pt-12 border rounded-xl mt-24 w-32 h-32">
-            {{ background }}
+            {{ mixBackground }}
         </div>
-        <div class="mt-2">
-            <HijoView :color="background" @color-change="changeColor" :color2="background2"
-                @color-change2="changeColor2" />
+        <div class="flex gap-6 mt-2">
+            <HijoView :color="background" @color-change="changeColor" />
+            <Hijo2View :color2="background2" @color-change2="changeColor2" />
         </div>
     </div>
 </template>
