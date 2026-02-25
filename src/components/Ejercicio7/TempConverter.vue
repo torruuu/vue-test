@@ -1,5 +1,7 @@
 <script setup>
-import {computed, ref, watch, watchEffect} from "vue";
+import { computed, ref, watch } from "vue";
+
+const emit = defineEmits(['validacion'])
 
 const inputTemp =ref();
 
@@ -32,23 +34,30 @@ const lengthError = computed(() => {
   return mensaje
 })
 
-function pintarSiHayErrores () {
+// const hayErroresComputed = computed(() => {
+//   if(errorFormato.value.length > 0 || lengthError.value.length > 0) {
+//     return true;
+//   }
+//   return false;
+// })
+
+const hayErroresFunction = () => {
   if(errorFormato.value.length > 0 || lengthError.value.length > 0) {
-    console.log ("Errores.")
+    return true;
   }
+  return false;
 }
 
-watch((inputTemp), (newValue, oldValue) => {
-  console.log(oldValue)
-  console.log(newValue)
-  pintarSiHayErrores()
- })
-watchEffect(() => {
-  console.log('gg')
-  if(errorFormato.value.length > 0 || lengthError.value.length > 0) {
-    console.log ("Errores.")
-  }
+
+
+watch((inputTemp), () => {
+  const isError = hayErroresFunction()
+  emit('validacion', isError)
 })
+
+// watchEffect(() => {
+//   emit('errores', hayErroresComputed.value)
+// })
 
 </script>
 <template>
