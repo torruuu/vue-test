@@ -1,15 +1,11 @@
 <script setup>
-import ColorPadre from './components/Juanal/CambioColor/ColorPadre.vue';
-
-//import ConsumerWeb from './components/Juanal/CompraWeb/ConsumerWeb.vue';
-
-
+import PadreView from './components/Laura/Ej_color/PadreView.vue';
 
 </script>
 
 <template>
-  
-  <ColorPadre />
+
+  <PadreView />
 
 
 </template>
