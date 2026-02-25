@@ -1,7 +1,6 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import HijoView from './HijoView.vue';
-import Hijo2View from './Hijo2View.vue';
 
 const background = ref('#F2C750');
 const background2 = ref('#49CF3A');
@@ -9,6 +8,12 @@ const mixBackground = computed(() => {
     const rgb1 = hexToRgb(background.value);
     const rgb2 = hexToRgb(background2.value);
     return colorMixer(rgb1, rgb2, 0.5);
+});
+
+//Funcion watch para que emita el alert
+watch(mixBackground, (nuevoValor) => {
+    alert(`El nuevo color mezclado es: ${nuevoValor}`)
+    console.log(nuevoValor)
 });
 
 //FUNCIONES PARA CONSEGUIR LAS FORMULAS PARA MEZCLAR COLORES
@@ -50,7 +55,7 @@ function changeColor2(color2) {
         </div>
         <div class="flex gap-6 mt-2">
             <HijoView :color="background" @color-change="changeColor" />
-            <Hijo2View :color2="background2" @color-change2="changeColor2" />
+            <HijoView :color="background2" @color-change="changeColor2" />
         </div>
     </div>
 </template>
