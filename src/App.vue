@@ -1,11 +1,13 @@
 <script setup>
-import PadreView from './components/Laura/Ej_color/PadreView.vue';
+import PadreForm from './components/Juanal/FormularioReservas/PadreForm.vue';
+
+
 
 </script>
 
 <template>
-
-  <PadreView />
+  
+<PadreForm  />
 
 
 </template>
