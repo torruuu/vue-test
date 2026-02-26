@@ -18,6 +18,7 @@ const calcularNoches = computed(() => {
     const entrada = new Date(fechaEntrada.value);
     const salida = new Date(fechaSalida.value);
     const nochesTotales = (salida - entrada) / (1000 * 60 * 60 * 24);
+    if (nochesTotales <= 0) return null;
     return nochesTotales;
 })
 
@@ -92,7 +93,7 @@ watch([fechaEntrada, fechaSalida, huespedes, habitacion], () => {
 
         </div>
         <div class="text-center">
-            <p v-if="errorFecha">{{ errorFecha }} €</p>
+            <p v-if="errorFecha">{{ errorFecha }}</p>
             <p v-if="errorHuespedes" class="text-red-500">{{ errorHuespedes }}</p>
         </div>
     </div>
