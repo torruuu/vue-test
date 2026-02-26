@@ -3,7 +3,7 @@ import { ref, computed, watch } from 'vue';
 //Variables declaradas. Reactivas. Cambian en funcion de los valores de los input.
 const fechaEntrada = ref('');
 const fechaSalida = ref('');
-const huespedes = ref('');
+const huespedes = ref(1);
 const habitacion = ref('');
 const rooms = [
     { value: 'standard', nombre: 'Estándar', precio: 100 },
@@ -51,8 +51,15 @@ const calcularPrecio = computed(() => {
 //No queremos botones, metemos un watch que observa la funcion y manda los datos si cambian...
 const emit = defineEmits(['enviarRegistro']);
 watch([fechaEntrada, fechaSalida, huespedes, habitacion], () => {
-    emit('enviarRegistro', fechaEntrada.value, fechaSalida.value, huespedes.value, habitacion.value, calcularNoches.value, calcularPrecio.value)
-});
+    if(!errorFecha.value && !errorHuespedes.value && habitacion.value && huespedes.value) {
+    emit ('enviarRegistro', {
+        entrada: fechaEntrada.value, 
+        salida: fechaSalida.value, 
+        huespedes: huespedes.value, 
+        habitacion: habitacion.value, 
+        noches: calcularNoches.value, 
+        precio: calcularPrecio.value})
+}});
 
 </script>
 
@@ -93,7 +100,7 @@ watch([fechaEntrada, fechaSalida, huespedes, habitacion], () => {
 
         </div>
         <div class="text-center">
-            <p v-if="errorFecha">{{ errorFecha }}</p>
+            <p v-if="errorFecha" class="text-red-500">{{ errorFecha }}</p>
             <p v-if="errorHuespedes" class="text-red-500">{{ errorHuespedes }}</p>
         </div>
     </div>
