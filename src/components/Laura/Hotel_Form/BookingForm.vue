@@ -73,19 +73,19 @@ watch([fechaEntrada, fechaSalida, huespedes, habitacion], () => {
                 <div class="flex flex-col">
                     <label for="fecha_entrada">Check-in</label>
                     <input v-model="fechaEntrada" name="fecha_entrada" id="fecha_entrada" type="date"
-                        class="border rounded-sm">
+                        class="border rounded-sm bg-amber-200">
                 </div>
                 <div class="flex flex-col">
                     <label for="fecha_salida">Check-out</label>
                     <input v-model="fechaSalida" name="fecha_salida" id="fecha_salida" type="date"
-                        class="border rounded-sm">
+                        class="border rounded-sm bg-amber-200">
                 </div>
             </div>
             <div class="flex justify-between mt-4">
                 <div class="flex gap-2">
                     <label for="huespedes">Huespedes:</label>
                     <input v-model.number="huespedes" name="huespedes" id="huespedes" type="number"
-                        class="w-12 border rounded-sm pl-2">
+                        class="w-12 border rounded-sm pl-2 bg-amber-200">
                 </div>
                 <div class="flex gap-2">
                     <label for="habitacion">Habitación:</label>
