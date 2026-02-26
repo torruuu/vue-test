@@ -1,17 +1,24 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 
 //Declaración de variables reactivas
-const fecha_entrada = ref('');
-const fecha_salida = ref('');
+const fechaEntrada = ref('');
+const fechaSalida = ref('');
 const huespedes = ref(1);
 const habitacion = ref('');
 
+const habitaciones = [
+    { id: 1, nombre: 'Estándar', precio: 100 },
+    { id: 2, nombre: 'Deluxe', precio: 180 },
+    { id: 3, nombre: 'Suite', precio: 250 },
+]
+
 // Funcion para calcular numero_noches
 const numeroNoches = computed(() => {
-    if (!fecha_entrada.value || !fecha_salida.value) return 0
-    const entrada = new Date(fecha_entrada.value)
-    const salida = new Date(fecha_salida.value)
+    if (!fechaEntrada.value || !fechaSalida.value) return 0
+    if (fechaSalida.value <= fechaEntrada.value) return 0
+    const entrada = new Date(fechaEntrada.value)
+    const salida = new Date(fechaSalida.value)
     const diferencia = salida - entrada
     return diferencia / (1000 * 60 * 60 * 24)
 });
@@ -19,6 +26,7 @@ const numeroNoches = computed(() => {
 // Funcion para calcular el importe total
 const precioTotal = computed(() => {
     if (!habitacion.value) return 0
+    if (errorFecha.value || errorHuespedes.value) return 0
     const calculo = habitacion.value * huespedes.value * numeroNoches.value;
     return calculo;
 });
@@ -26,7 +34,7 @@ const precioTotal = computed(() => {
 // VALIDACIONES
 // Validacion fecha salida
 const errorFecha = computed(() => {
-    if (fecha_salida.value && fecha_entrada.value && fecha_salida.value <= fecha_entrada.value) {
+    if (fechaSalida.value && fechaEntrada.value && fechaSalida.value <= fechaEntrada.value) {
         return 'La fecha de salida debe ser posterior a la fecha de entrada'
     }
     return null
@@ -40,49 +48,63 @@ const errorHuespedes = computed(() => {
     return null
 })
 
+// Emit con watch para que cuando no haya errores se emita al padre la info
+const emit = defineEmits(['reserva'])
+
+watch([fechaEntrada, fechaSalida, huespedes, habitacion], () => {
+    if (!errorFecha.value && !errorHuespedes.value && habitacion.value && numeroNoches.value > 0) {
+        emit('reserva', {
+            fechaEntrada: fechaEntrada.value,
+            fechaSalida: fechaSalida.value,
+            huespedes: huespedes.value,
+            habitacion: habitacion.value,
+            numeroNoches: numeroNoches.value,
+            precioTotal: precioTotal.value
+        })
+    }
+})
 
 </script>
 
 <template>
-    <div class="min-h-screen flex justify-center items-center bg-gray-700">
-        <div class="bg-amber-50 rounded-2xl shadow-lg w-full max-w-xl p-8">
-            <form>
-                <div class="flex justify-between">
-                    <div class="flex flex-col">
-                        <label for="fecha_entrada">Check-in</label>
-                        <input v-model="fecha_entrada" name="fecha_entrada" id="fecha_entrada" type="date"
-                            class="border rounded-sm">
-                    </div>
-                    <div class="flex flex-col">
-                        <label for="fecha_salida">Check-out</label>
-                        <input v-model="fecha_salida" name="fecha_salida" id="fecha_salida" type="date"
-                            class="border rounded-sm">
-                    </div>
+    <div class="bg-amber-50 rounded-2xl shadow-lg w-full max-w-xl p-8">
+        <form>
+            <div class="flex justify-between">
+                <div class="flex flex-col">
+                    <label for="fecha_entrada">Check-in</label>
+                    <input v-model="fechaEntrada" name="fecha_entrada" id="fecha_entrada" type="date"
+                        class="border rounded-sm">
                 </div>
-                <div class="flex justify-between mt-4">
-                    <div class="flex gap-2">
-                        <label for="huespedes">Huespedes:</label>
-                        <input v-model.number="huespedes" name="huespedes" id="huespedes" type="number"
-                            class="w-12 border rounded-sm pl-2">
-                    </div>
-                    <div class="flex gap-2">
-                        <label for="habitacion">Habitación:</label>
-                        <select v-model="habitacion" name="habitacion" id="habitacion" class="w-36 border rounded-sm">
-                            <option value="100">Estandar (100€)</option>
-                            <option value="180">Deluxe (180€)</option>
-                            <option value="250">Suite (250€)</option>
-                        </select>
-                    </div>
+                <div class="flex flex-col">
+                    <label for="fecha_salida">Check-out</label>
+                    <input v-model="fechaSalida" name="fecha_salida" id="fecha_salida" type="date"
+                        class="border rounded-sm">
                 </div>
-            </form>
-            <div class="flex gap-8 mt-12">
-                <span>Nª noches: {{ numeroNoches }}</span>
-                <span>Total: {{ precioTotal }}€</span>
             </div>
-            <div class="mt-4 space-y-1">
-                <div v-if="errorFecha" class="text-red-600 text-sm">{{ errorFecha }}</div>
-                <div v-if="errorHuespedes" class="text-red-600 text-sm">{{ errorHuespedes }}</div>
+            <div class="flex justify-between mt-4">
+                <div class="flex gap-2">
+                    <label for="huespedes">Huespedes:</label>
+                    <input v-model.number="huespedes" name="huespedes" id="huespedes" type="number"
+                        class="w-12 border rounded-sm pl-2">
+                </div>
+                <div class="flex gap-2">
+                    <label for="habitacion">Habitación:</label>
+                    <select v-model="habitacion" name="habitacion" id="habitacion" class="w-48 border rounded-sm">
+                        <option value="" disabled selected>Elige tipo de habitación</option>
+                        <option v-for="hab in habitaciones" :key="hab.id" :value="hab.precio">
+                            {{ hab.nombre }} ({{ hab.precio }}€)
+                        </option>
+                    </select>
+                </div>
             </div>
+        </form>
+        <div class="flex gap-8 mt-12">
+            <span>Nª noches: {{ numeroNoches }}</span>
+            <span>Total: {{ precioTotal }}€</span>
+        </div>
+        <div class="mt-4 space-y-1">
+            <div v-if="errorFecha" class="text-red-600 text-sm">{{ errorFecha }}</div>
+            <div v-if="errorHuespedes" class="text-red-600 text-sm">{{ errorHuespedes }}</div>
         </div>
     </div>
 </template>
