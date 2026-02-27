@@ -36,7 +36,6 @@ function cancelar() {
 function eliminar(id) {
     reservas.value = reservas.value.filter(res => res.id !== id);
 }
-
 </script>
 
 <template>
