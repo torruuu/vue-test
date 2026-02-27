@@ -6,7 +6,7 @@ const props = defineProps({
 const emit = defineEmits(['eliminarReserva'])
 
 function eliminar () {
-    emit('eliminarReserva', props.index);
+    emit('eliminarReserva', props.id);
 }
 </script>
 <template>

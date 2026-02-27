@@ -10,18 +10,26 @@ const rooms = [
     { value: 'deluxe', nombre: 'Deluxe', precio: 180 },
     { value: 'suite', nombre: 'Suite', precio: 250 },
 ]
+let entrada = computed (() => new Date(fechaEntrada.value));
+let salida = computed (() => new Date(fechaSalida.value));
+
 //Primera funcion COMPUTED. Mete en dos variables nuevas las recogidas en los input y nos da dos opciones. Si esta todo OK muestra las noches si no me muestras el mensaje de Error.
 //Eso lo elegimos abajo con v-if.
 const calcularNoches = computed(() => {
     if (!fechaEntrada.value || !fechaSalida.value) return null;
-    //Objeto DATE. Necesario para poder realizar la resta.
-    const entrada = new Date(fechaEntrada.value);
-    const salida = new Date(fechaSalida.value);
-    const nochesTotales = (salida - entrada) / (1000 * 60 * 60 * 24);
-    if (nochesTotales <= 0) return null;
-    return nochesTotales;
-})
-
+    const noches = (salida.value - entrada.value) / (1000 * 60 * 60 * 24);
+    if (noches <= 0) return null;
+    return noches;
+});
+    
+watch([fechaEntrada, fechaSalida], () => {
+    if (!fechaEntrada.value || !fechaSalida.value) return;
+    if (entrada.value > salida.value) {
+        const nuevaEntrada = new Date(salida.value);
+        nuevaEntrada.setDate(nuevaEntrada.getDate() - 1);
+        fechaEntrada.value = nuevaEntrada.toISOString().split('T')[0];
+    }
+});
 //VALIDACIONES.
 //Validacion fecha salida.
 const errorFecha = computed(() => {

@@ -12,11 +12,17 @@ function recibirRegistro(datos) {
 }
 
 function almacenarReserva () {
-
-    if(reservaActual.value) {
-    reservas.value.push ({...reservaActual.value});
+    if (!reservaActual.value) return;
+    const reservaExistente = reservas.value.find (
+        (r) =>
+        r.fechaEntrada === reservaActual.value.fechaEntrada && r.fechaSalida === reservaActual.value.fechaSalida);
     
-}}
+    if(reservaExistente) {
+        const confirmar = confirm ('Ya existe una reserva para las fechas seleccionadas. ¿Desea añadirla de todos modos?');
+        if(!confirmar) return;}
+    reservas.value.push ({...reservaActual.value, id:Date.now()});  
+}
+
 function eliminarReserva (index){
     reservas.value.splice (index, 1)
     
@@ -35,7 +41,7 @@ function eliminarReserva (index){
         <button @click="almacenarReserva" class="bg-green-500 border-4 rounded-sm p-2" >Confirmar reserva</button>
     </div>
     <div class="flex flex-row flex-wrap justify-center mt-6 gap-20">
-        <BookingSumary v-for="(reserva, index) in reservas" :key="index" :reserva="reserva" :index="index" @eliminarReserva="eliminarReserva"/>
+        <BookingSumary v-for="(reserva, index) in reservas" :key="index" :reserva="reserva" :id="id" @eliminarReserva="eliminarReserva"/>
         
     </div>
     <div>
