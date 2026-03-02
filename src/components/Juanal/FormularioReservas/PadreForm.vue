@@ -22,7 +22,7 @@ function almacenarReserva() {
     const reservaExistente = reservas.value.find(r => {
         const entradaExistente = new Date(r.entrada);
         const salidaExistente = new Date(r.salida);
-        return nuevaEntrada < salidaExistente && nuevaSalida > entradaExistente;
+        return nuevaEntrada <= salidaExistente && nuevaSalida >= entradaExistente;
     });
 
     if (reservaExistente) {
