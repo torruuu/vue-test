@@ -22,14 +22,24 @@ const calcularNoches = computed(() => {
     return noches;
 });
     
-watch([fechaEntrada, fechaSalida], () => {
+watch(fechaEntrada, () => {
     if (!fechaEntrada.value || !fechaSalida.value) return;
-    if (entrada.value > salida.value) {
+    if (entrada.value >= salida.value) {
+        const nuevaSalida = new Date(entrada.value);
+        nuevaSalida.setDate(nuevaSalida.getDate() + 1);
+        fechaSalida.value = nuevaSalida.toISOString().split('T')[0];
+    }
+});
+
+watch(fechaSalida, () => {
+    if (!fechaEntrada.value || !fechaSalida.value) return;
+    if (salida.value <= entrada.value) {
         const nuevaEntrada = new Date(salida.value);
         nuevaEntrada.setDate(nuevaEntrada.getDate() - 1);
         fechaEntrada.value = nuevaEntrada.toISOString().split('T')[0];
     }
 });
+    
 //VALIDACIONES.
 //Validacion fecha salida.
 const errorFecha = computed(() => {

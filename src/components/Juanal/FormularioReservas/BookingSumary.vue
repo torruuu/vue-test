@@ -1,7 +1,8 @@
 <script setup>
 const props = defineProps({
   reserva: Object,
-  index: Number
+  index: Number,
+  id: Number
 })
 const emit = defineEmits(['eliminarReserva'])
 
