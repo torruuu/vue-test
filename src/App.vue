@@ -1,11 +1,13 @@
 <script setup>
-import PadreViewHotel from './components/Laura/Hotel_Form/PadreViewHotel.vue';
+import PadreForm from './components/Juanal/FormularioReservas/PadreForm.vue';
+
+
 
 </script>
 
 <template>
-
-  <PadreViewHotel />
+  
+<PadreForm  />
 
 
 </template>
