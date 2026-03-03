@@ -14,7 +14,7 @@ function imprime(datos) {
 
 //Funcion para confirmar reserva
 function confirmar() {
-    if (reservas.value.some(r => reserva.value.fechaSalida > r.fechaEntrada && reserva.value.fechaEntrada < r.fechaSalida)) {
+    if (reservas.value.some(r => reserva.value.fechaSalida > r.fechaEntrada && reserva.value.fechaEntrada <= r.fechaSalida)) {
         mensaje.value = true;
         return;
     }
