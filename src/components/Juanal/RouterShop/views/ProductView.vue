@@ -1,15 +1,17 @@
 <script setup>
-import { computed, ref } from "vue"
-import { products } from "./products.js"
-import { useCarroStore } from "./carroStore.js"
+import { computed} from "vue"
+import { products } from '../products.js'
+import { useCarroStore } from '../stores/carroStore.js'
+import { useFavoritesStore } from '../stores/favoritesStore.js'
 import { useRoute, useRouter } from "vue-router"
 import { Heart, Star, ArrowLeft } from "lucide-vue-next"
+
 
 const route = useRoute()
 const router = useRouter();
 const carro = useCarroStore();
-//VARIABLE LIKED QUE AFECTA AL CORAZÓN, POR DEFECTO FALSE. SI SE PULSA CAMBIA A TRUE Y CAMBIA COLOR.
-const liked = ref(false)
+const favorites = useFavoritesStore();
+
 //VARIABLE ESTRELLAS. MUESTRAS LAS ESTRELLAS DETERMINADAS POR EL RATING
 const stars = computed(() => {
   const rate = product.value?.rating.rate ?? 0
@@ -69,13 +71,13 @@ const product = computed(() =>
             Añadir
           </button>
 
-          <button @click="liked = !liked">
-            <Heart
-              :size="20"
-              :fill="liked ? '#ef4444' : 'none'"
-              class="transition-colors"
-            />
-          </button>
+          <button @click="favorites.toggleFavorito(product)">
+  <Heart
+    :size="20"
+    :fill="favorites.esFavorito(product.id) ? '#ef4444' : 'none'"
+    class="transition-colors"
+  />
+</button>
         </div>
       </div>
     </div>

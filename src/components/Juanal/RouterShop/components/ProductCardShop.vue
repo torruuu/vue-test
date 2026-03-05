@@ -38,6 +38,7 @@ computed() la lee y convierte   →    Number("3") = 3
       {{ price }} €
     </div>
 
+
   </div>
 </RouterLink>
 </template>
