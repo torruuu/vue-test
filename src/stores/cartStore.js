@@ -7,24 +7,26 @@ export const useCartStore = defineStore("cart", () => {
   const getCart = computed(() => cart.value)
 
   function addProduct(product) {
-    cart.value.push(product)
+    const existe = cart.value.find((p) => p.id === product.id)
+
+    if (existe) {
+      existe.cantidad++
+    } else {
+      cart.value.push({ ...product, cantidad: 1 })
+    }
   }
 
   function removeProduct(productId) {
-    cart.value = cart.value.filter((p) => p.id !== productId)
+    const existe = cart.value.find((p) => p.id === productId)
+    console.log("existe:", existe)
+    console.log("cantidad:", existe?.cantidad)
+
+    if (existe.cantidad > 1) {
+      existe.cantidad = existe.cantidad - 1
+    } else {
+      cart.value = cart.value.filter((p) => p.id !== productId)
+    }
   }
 
   return { cart, getCart, addProduct, removeProduct }
-})
-
-export const useFavorites = defineStore("favorite", () => {
-  const favorite = ref([])
-
-  const getFavorite = computed(() => favorite.value)
-
-  function addFavorite(producto) {
-    favorite.value.push(producto)
-  }
-
-  return { favorite, getFavorite, addFavorite }
 })

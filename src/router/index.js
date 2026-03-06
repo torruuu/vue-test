@@ -3,6 +3,7 @@ import ClothesDetailView from "@/views/ClothesDetailView.vue"
 import ClothesView from "@/views/ClothesView.vue"
 import CartShopView from "@/views/CartShopView.vue"
 import NotFoundView from "@/views/NotFoundView.vue"
+import FavoritesView from "@/views/FavoritesView.vue"
 
 const routes = [
   {
@@ -23,6 +24,11 @@ const routes = [
     path: "/cartshop",
     name: "cartshop",
     component: CartShopView,
+  },
+  {
+    path: "/favorites",
+    name: "favorites",
+    component: FavoritesView,
   },
   {
     path: "/:pathMatch(.*)*",
