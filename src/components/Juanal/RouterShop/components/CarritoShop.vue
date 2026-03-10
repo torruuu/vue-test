@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia'
 import { useCarroStore } from '../stores/carroStore.js'
 import { ShoppingCart, X } from 'lucide-vue-next'
 import { useRouter } from 'vue-router'
+import ProductoItem from '../components/ProductoItem.vue'
 
 const mostrarCarro = ref(false)
 const carro = useCarroStore()
@@ -15,6 +16,9 @@ const router = useRouter()
 function irAlCarrito() {
   mostrarCarro.value = false
   router.push('/carrito')
+}
+function removeItem(item){
+  carro.removeItem(item.id);
 }
 </script>
 
@@ -32,16 +36,17 @@ function irAlCarrito() {
       </p>
 
       <ul v-else class="flex flex-col gap-2">
-        <li v-for="item in itemsCarro" :key="item.id" class="flex items-center justify-between text-sm">
-          <span class="flex-1">{{ item.title }}</span>
-          <span class="text-gray-400 mx-2">x{{ item.cantidad }}</span>
-          <span class="font-bold mr-2">{{ (item.price * item.cantidad).toFixed(2) }} €</span>
-          <button @click="carro.removeItem(item.id)" class="text-red-400 hover:text-red-600">
+        <ProductoItem v-for="item in itemsCarro" :key="item.id" :product="item">
+        <template #acciones>
+          <span class="text-gray-500 text-xs">x{{ item.cantidad }}</span>  
+          <button @click="removeItem(item)" class="text-red-400 hover:text-red-600">
             <X :size="14" />
           </button>
-        </li>
-      </ul>
-
+            
+          
+        </template>
+      </ProductoItem>
+    </ul>
       <div v-if="itemsCarro.length > 0" class="mt-4 border-t pt-3 flex justify-between items-center font-bold">
         <span>Total: {{ total }} €</span>
         <button @click="irAlCarrito" class="text-sm bg-black text-white px-3 py-1 rounded-xl hover:bg-gray-800">
