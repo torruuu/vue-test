@@ -13,6 +13,7 @@ function handleFavorite(producto) {
 
 function handleAdd(producto) {
     storeCart.addProduct(producto)
+    storeFav.marcarFavorito(producto)
 }
 </script>
 
@@ -20,7 +21,7 @@ function handleAdd(producto) {
     <div>
         <div class="ml-12 mb-10">
             <router-link to="/clothes">
-                <div class="w-12 h-12 flex items-center justify-center
+                <div class="inline-flex w-12 h-12 items-center justify-center
                 bg-white/30 backdrop-blur-md
                 rounded-full shadow-lg
                 hover:bg-white/40 transition">
@@ -28,8 +29,22 @@ function handleAdd(producto) {
                 </div>
             </router-link>
         </div>
-        <ProductList :lista="storeFav.favorites">
-            <template #default="{ producto }">
+
+        <div v-if="storeFav.favorites.length === 0" class="text-center text-gray-400 py-12 text-lg">
+            No hay artículos añadidos.
+        </div>
+
+        <ProductList v-for="producto in storeFav.favorites" :key="producto.id">
+            <template #imagen>
+                <img :src="producto.imagen" class="w-16 h-16 border object-cover rounded-lg">
+            </template>
+            <template #nombre>
+                <span>{{ producto.nombre }}</span>
+            </template>
+            <template #precio>
+                <span>{{ producto.precio }} €</span>
+            </template>
+            <template #acciones>
                 <button @click="handleFavorite(producto)">
                     <Heart class="text-red-500 fill-red-500" />
                 </button>

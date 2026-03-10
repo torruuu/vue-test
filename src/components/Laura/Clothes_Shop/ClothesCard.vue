@@ -6,10 +6,10 @@ defineProps({
 </script>
 <template>
     <router-link :to="`/clothes/${producto.id}`">
-        <div class="flex flex-col border-4 rounded-3xl p-4 bg-white">
-            <img :src="producto.imagen" :alt="`imagen ${producto.nombre}`" class="justify-items-center w-72">
-            <div class="font-bold">{{ producto.nombre }}</div>
-            <div class="justify-items-start">{{ producto.precio }} €</div>
+        <div class="flex flex-col shadow-md rounded-3xl p-4 bg-white h-full">
+            <img :src="producto.image" :alt="`imagen ${producto.title}`" class="w-full h-64 object-contain">
+            <div class="font-bold line-clamp-2 mt-2">{{ producto.title }}</div>
+            <div>{{ producto.price }} €</div>
         </div>
     </router-link>
 </template>

@@ -1,6 +1,7 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
-import { productos } from '@/data/productos.js'
+import { ref, onMounted } from 'vue'
+import { getProducto } from '@/api/api.js'
 import { Heart, Undo2, Star } from 'lucide-vue-next'
 import { useCartStore } from '@/stores/cartStore'
 import { useFavoritesStore } from '@/stores/favoritesStore'
@@ -9,29 +10,28 @@ const storeFav = useFavoritesStore()
 const store = useCartStore()
 const route = useRoute()
 const router = useRouter()
-const producto = productos.find(p => p.id === Number(route.params.id))
+const producto = ref(null)
 
-//Funcion para añadir a favoritos
+onMounted(async () => {
+    producto.value = await getProducto(route.params.id)
+    if (!producto.value) {
+        router.push({ name: 'notfound' })
+    }
+})
+
 function handleFavorite() {
-    storeFav.marcarFavorito(producto)
+    storeFav.marcarFavorito(producto.value)
 }
 
-//Funcion para añadir productos
 function handleaddProduct() {
-    store.addProduct(producto)
+    store.addProduct(producto.value)
 }
-
-// De esta manera si no hay producto te redirige a la vista notfound pero desde script
-if (!producto) {
-    router.push({ name: 'notfound' })
-}
-
 </script>
 
 <template>
     <div v-if="producto">
         <div class="ml-12 mb-10">
-            <router-link to="/clothes">
+            <router-link to="/clothes" class="inline-block">
                 <div class="w-12 h-12 flex items-center justify-center
                 bg-white/30 backdrop-blur-md
                 rounded-full shadow-lg
@@ -40,16 +40,16 @@ if (!producto) {
                 </div>
             </router-link>
         </div>
-        <div class="max-w-3xl mx-auto grid grid-cols-2">
-            <div class="border rounded-xl mr-4">
-                <img :src="producto.imagen" :alt="producto.nombre" class="rounded-xl p-4 border bg-white">
+        <div class="max-w-3xl mx-auto grid grid-cols-2 gap-4">
+            <div class="border rounded-xl mr-4 bg-white p-2">
+                <img :src="producto.image" :alt="producto.title" class="bg-white p-8">
             </div>
             <div class="flex flex-col">
-                <div class="mt-4 font-bold text-2xl">
-                    {{ producto.nombre }}
+                <div class="font-bold text-2xl">
+                    {{ producto.title }}
                 </div>
                 <div class="mt-4 text-xl">
-                    {{ producto.descripcion }}
+                    {{ producto.description }}
                 </div>
                 <div class="mt-4 text-xl">
                     <div class="flex gap-1">
@@ -58,11 +58,11 @@ if (!producto) {
                         ({{ producto.rating.count }})
                     </div>
                     <div class="mt-4 text-xl font-bold">
-                        {{ producto.precio }}€
+                        {{ producto.price }} €
                     </div>
                 </div>
                 <div class="flex mt-4 gap-4">
-                    <button @click="handleaddProduct" class=" inline-block px-6 py-3 rounded-2xl bg-linear-to-br
+                    <button @click="handleaddProduct" class="inline-block px-6 py-3 rounded-2xl bg-linear-to-br
                         from-green-500 to-green-300 text-black fill-black font-bold shadow-lg">
                         AÑADIR
                     </button>

@@ -1,9 +1,16 @@
 <script setup>
 import ClothesCard from '@/components/Laura/Clothes_Shop/ClothesCard.vue';
-import { productos } from '@/data/productos.js'
+import { ref, onMounted } from 'vue';
+import { getProductos } from '@/api/api';
 
+const productos = ref([])
+
+onMounted(async () => {
+    productos.value = await getProductos()
+});
 
 </script>
+
 <template>
     <div class="py-32 px-32">
         <div class="min-h-screen flex items-center justify-center">

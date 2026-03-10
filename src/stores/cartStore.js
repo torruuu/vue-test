@@ -8,11 +8,16 @@ export const useCartStore = defineStore("cart", () => {
 
   function addProduct(product) {
     const existe = cart.value.find((p) => p.id === product.id)
-
     if (existe) {
       existe.cantidad++
     } else {
-      cart.value.push({ ...product, cantidad: 1 })
+      cart.value.push({
+        id: product.id,
+        imagen: product.image,
+        nombre: product.title,
+        precio: product.price,
+        cantidad: 1,
+      })
     }
   }
 
