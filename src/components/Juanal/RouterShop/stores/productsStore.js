@@ -7,17 +7,18 @@ export const useProductosStore = defineStore("productos", () => {
   const error = ref(null)
   const productoDetalle = ref(null)
 
+  async function fetchData(url) {
+    const res = await fetch(url)
+    if (!res.ok) throw new Error(`Error ${res.status}: fallo en la solicitud.`)
+    return res.json()
+  }
+
   async function fetchProductos() {
     if (productos.value.length > 0) return
     loading.value = true
     error.value = null
     try {
-      const res = await fetch("https://fakestoreapi.com/products")
-      if (!res.ok)
-        throw new Error(
-          `Error ${res.status}: no se pudieron cargar los productos`,
-        )
-      productos.value = await res.json()
+      productos.value = await fetchData("https://fakestoreapi.com/products")
     } catch (e) {
       error.value = e.message
     } finally {
@@ -30,9 +31,9 @@ export const useProductosStore = defineStore("productos", () => {
     loading.value = true
     error.value = null
     try {
-      const res = await fetch(`https://fakestoreapi.com/products/${id}`)
-      if (!res.ok) throw new Error(`Producto no encontrado`)
-      productoDetalle.value = await res.json()
+      productoDetalle.value = await fetchData(
+        `https://fakestoreapi.com/products/${id}`,
+      )
     } catch (e) {
       error.value = e.message
     } finally {
