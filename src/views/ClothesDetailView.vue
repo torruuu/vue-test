@@ -1,4 +1,4 @@
-<script setup async>
+<script setup>
 import { useRoute, useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { getProducto } from '@/api/api.js'
@@ -11,13 +11,18 @@ const store = useCartStore()
 const route = useRoute()
 const router = useRouter()
 const producto = ref(null)
+const error = ref(null)
 
-
-producto.value = await getProducto(route.params.id)
-if (!producto.value) {
-    router.push({ name: 'notfound' })
+async function cargarProducto() {
+    const { data, error: err } = await getProducto(route.params.id)
+    producto.value = data
+    error.value = err
+    if (!producto.value) {
+        router.push({ name: 'notfound' })
+    }
 }
 
+cargarProducto()
 
 function handleFavorite() {
     storeFav.marcarFavorito(producto.value)
@@ -29,7 +34,8 @@ function handleaddProduct() {
 </script>
 
 <template>
-    <div v-if="producto">
+    <div v-if="error">{{ error }}</div>
+    <div v-else-if="producto">
         <div class="ml-12 mb-10">
             <router-link to="/clothes" class="inline-block">
                 <div class="w-12 h-12 flex items-center justify-center
@@ -45,21 +51,15 @@ function handleaddProduct() {
                 <img :src="producto.image" :alt="producto.title" class="bg-white p-8">
             </div>
             <div class="flex flex-col">
-                <div class="font-bold text-2xl">
-                    {{ producto.title }}
-                </div>
-                <div class="mt-4 text-xl">
-                    {{ producto.description }}
-                </div>
+                <div class="font-bold text-2xl">{{ producto.title }}</div>
+                <div class="mt-4 text-xl">{{ producto.description }}</div>
                 <div class="mt-4 text-xl">
                     <div class="flex gap-1">
                         <Star v-for="estrella in 5" :key="estrella"
                             :class="estrella <= producto.rating.rate ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300 fill-gray-300'" />
                         ({{ producto.rating.count }})
                     </div>
-                    <div class="mt-4 text-xl font-bold">
-                        {{ producto.price }} €
-                    </div>
+                    <div class="mt-4 text-xl font-bold">{{ producto.price }} €</div>
                 </div>
                 <div class="flex mt-4 gap-4">
                     <button @click="handleaddProduct" class="inline-block px-6 py-3 rounded-2xl bg-linear-to-br
@@ -75,4 +75,5 @@ function handleaddProduct() {
             </div>
         </div>
     </div>
+    <div v-else>Cargando...</div>
 </template>

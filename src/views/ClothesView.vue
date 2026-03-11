@@ -8,13 +8,10 @@ const cargando = ref(true)
 const error = ref(null)
 
 async function cargarProductos() {
-    try {
-        productos.value = await getProductos()
-    } catch (e) {
-        error.value = e.message || "Error al cargar los productos"
-    } finally {
-        cargando.value = false
-    }
+    const { data, error: err } = await getProductos()
+    productos.value = data || []
+    error.value = err
+    cargando.value = false
 }
 
 cargarProductos()
