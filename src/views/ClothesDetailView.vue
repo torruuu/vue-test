@@ -1,6 +1,6 @@
-<script setup>
+<script setup async>
 import { useRoute, useRouter } from 'vue-router'
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { getProducto } from '@/api/api.js'
 import { Heart, Undo2, Star } from 'lucide-vue-next'
 import { useCartStore } from '@/stores/cartStore'
@@ -12,12 +12,12 @@ const route = useRoute()
 const router = useRouter()
 const producto = ref(null)
 
-onMounted(async () => {
-    producto.value = await getProducto(route.params.id)
-    if (!producto.value) {
-        router.push({ name: 'notfound' })
-    }
-})
+
+producto.value = await getProducto(route.params.id)
+if (!producto.value) {
+    router.push({ name: 'notfound' })
+}
+
 
 function handleFavorite() {
     storeFav.marcarFavorito(producto.value)
