@@ -1,7 +1,9 @@
-export async function getProductos() {
-  await new Promise((resolve) => setTimeout(resolve, 2000))
+export async function getProductos(limit = 6, delay = true) {
+  if (delay) await new Promise((resolve) => setTimeout(resolve, 2000))
   try {
-    const response = await fetch("https://fakestoreapi.com/products?limit=6")
+    const response = await fetch(
+      `https://fakestoreapi.com/products?limit=${limit}`,
+    )
     const data = await response.json()
     return { data, error: null }
   } catch (e) {

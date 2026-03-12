@@ -5,16 +5,21 @@ export function useProductos() {
   const productos = ref([])
   const loading = ref(false)
   const error = ref(null)
+  const limit = ref(6)
 
-  async function cargarProductos() {
+  async function cargarProductos(delay = true) {
     loading.value = true
-    const { data, error: err } = await getProductos()
+    const { data, error: err } = await getProductos(limit.value, delay)
     productos.value = data ?? []
     error.value = err
     loading.value = false
   }
+  async function cargarMas() {
+    limit.value += 3
+    await cargarProductos(false)
+  }
 
-  return { productos, loading, error, cargarProductos }
+  return { productos, loading, error, cargarProductos, cargarMas }
 }
 
 export function useProducto() {
