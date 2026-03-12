@@ -8,37 +8,31 @@ export const useProductosStore = defineStore("productos", () => {
   const productoDetalle = ref(null)
 
   async function fetchData(url) {
-    const res = await fetch(url)
-    if (!res.ok) throw new Error(`Error ${res.status}: fallo en la solicitud.`)
-    return res.json()
+    loading.value = true
+    error.value = null
+    try {
+      const res = await fetch(url)
+      if (!res.ok)
+        throw new Error(`Error ${res.status}: fallo en la solicitud.`)
+      return await res.json()
+    } catch (e) {
+      error.value = e.message
+      return null
+    } finally {
+      loading.value = false
+    }
   }
 
   async function fetchProductos() {
     if (productos.value.length > 0) return
-    loading.value = true
-    error.value = null
-    try {
-      productos.value = await fetchData("https://fakestoreapi.com/products")
-    } catch (e) {
-      error.value = e.message
-    } finally {
-      loading.value = false
-    }
+    productos.value =
+      (await fetchData("https://fakestoreapi.com/products")) ?? []
   }
 
   async function fetchProductoById(id) {
-    productoDetalle.value = null
-    loading.value = true
-    error.value = null
-    try {
-      productoDetalle.value = await fetchData(
-        `https://fakestoreapi.com/products/${id}`,
-      )
-    } catch (e) {
-      error.value = e.message
-    } finally {
-      loading.value = false
-    }
+    productoDetalle.value = await fetchData(
+      `https://fakestoreapi.com/products/${id}`,
+    )
   }
 
   return {
