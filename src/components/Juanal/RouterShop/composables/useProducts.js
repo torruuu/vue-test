@@ -1,3 +1,4 @@
+//import { Watch } from "vue"
 import { ref } from "vue"
 
 const BASE_URL = "https://fakestoreapi.com/products"
@@ -10,6 +11,23 @@ const error = ref(null)
 const productoDetalle = ref(null)
 const limit = ref(LIMIT_INICIAL)
 
+/*watch(limit, async (nuevoLimit) => {
+  loading.value = true
+  error.value = null
+  try {
+    const res = await fetch(`${BASE_URL}?limit=${nuevoLimit}`)
+    if (!res.ok) throw new Error(`Error ${res.status}: fallo en la solicitud.`)
+    productos.value = await res.json()
+  } catch (e) {
+    error.value = e.message
+  } finally {
+    loading.value = false
+  }
+})*/
+
+/*function cargarMasWatch() {
+  limit.value += LIMIT_INCREMENT
+}*/
 export function useProductos() {
   async function fetchData(fetchUrl) {
     loading.value = true
@@ -52,3 +70,6 @@ export function useProductos() {
     cargarMas,
   }
 }
+
+//export {cargarMasWatch}
+//USAMOS LA FORMA POR DEFECTO, LA OTRA OPCIÓN ES CON UN WATCH QUE OBSERVA LA VARIABLE REACTIVA LIMIT.
