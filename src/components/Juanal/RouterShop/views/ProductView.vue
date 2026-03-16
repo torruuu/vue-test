@@ -10,8 +10,8 @@ const route = useRoute()
 const router = useRouter()
 const carro = useCarroStore()
 const favorites = useFavoritesStore()
-const { data, loading, error, fetchData } = useProductos()
-onMounted(() => fetchData(route.params.id))
+const { data, loading, error, fetchData, BASE_URL } = useProductos()
+onMounted(() => fetchData(`${BASE_URL}/${route.params.id}`))
 
 const stars = computed(() => {
   const rate = data.value?.rating?.rate ?? 0

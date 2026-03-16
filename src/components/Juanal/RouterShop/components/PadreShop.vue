@@ -6,8 +6,8 @@ import { useFavoritesStore } from '../stores/favoritesStore.js'
 import { Heart } from 'lucide-vue-next'
 
 const favorites = useFavoritesStore()
-const { data, loading, error, fetchData, cargarMas } = useProductos()
-onMounted(() => fetchData())
+const { data, loading, error, fetchData, cargarMas, BASE_URL } = useProductos()
+onMounted(() => fetchData(BASE_URL, { limit: 6 }))
 </script>
 
 <template>
