@@ -10,6 +10,7 @@ const favorites = useFavoritesStore()
 const carro = useCarroStore()
 const { itemsFavoritos } = storeToRefs(favorites)
 const router = useRouter();
+
 function addAndRemoveItem(product){
   carro.addItem(product);
   favorites.toggleFavorito(product);
@@ -17,32 +18,41 @@ function addAndRemoveItem(product){
 function removeFavorite(product) {
   favorites.toggleFavorito(product)
 }
-
-//AQUI IMPORTAMOS EL PRODUCTO ITEM, PORQUE HAY ELEMENTOS COMUNES Y LUEGO EN EL APARTADO TEMPLATE METEMOS EL SLOT ACCIONES. UNO CON DOS BOTONES, OTRO CON UNO.
 </script>
 
 <template>
-  <div class="max-w-2xl mx-auto p-6 mt-6">
-    
-    <button @click="router.back()" class="mb-6 flex items-center gap-2 text-black-500 text-lg font-bold">
-  <ArrowLeft :size="18" />
-  Volver
-</button>
-<h1 class="text-2xl font-bold mb-6">❤️ Favoritos</h1>
+  <div class="min-h-screen bg-slate-800 p-8 pt-16">
+    <div class="max-w-2xl mx-auto">
 
-    <p v-if="itemsFavoritos.length === 0" class="text-gray-400">No tienes favoritos aún.</p>
+      <button @click="router.back()" class="mb-8 flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm font-medium">
+        <ArrowLeft :size="16" />
+        Volver a la tienda
+      </button>
 
-    <ul v-else class="flex flex-col gap-4">
-      <ProductoItem v-for="product in itemsFavoritos" :key="product.id" :product="product">
-        <template #acciones>
-          <button @click="addAndRemoveItem(product)" class="text-gray-400 hover:text-black transition-colors">
-            <ShoppingCart :size="18" />
-          </button>
-          <button @click="removeFavorite(product)" class="text-red-400 hover:text-red-600">
-            <Heart :size="18" fill="currentColor" />
-          </button>
-        </template>
-      </ProductoItem>
-    </ul>
+      <div class="flex items-center gap-3 mb-8">
+        <h1 class="text-3xl font-bold text-white">Favoritos</h1>
+        <span v-if="itemsFavoritos.length > 0" class="bg-slate-700 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-full">
+          {{ itemsFavoritos.length }}
+        </span>
+      </div>
+
+      <p v-if="itemsFavoritos.length === 0" class="text-slate-400 text-sm">
+        No tienes favoritos aún.
+      </p>
+
+      <ul v-else class="flex flex-col gap-3">
+        <ProductoItem v-for="product in itemsFavoritos" :key="product.id" :product="product">
+          <template #acciones>
+            <button @click="addAndRemoveItem(product)" class="text-slate-400 hover:text-slate-800 transition-colors">
+              <ShoppingCart :size="18" />
+            </button>
+            <button @click="removeFavorite(product)" class="text-red-400 hover:text-red-600 transition-colors">
+              <Heart :size="18" fill="currentColor" />
+            </button>
+          </template>
+        </ProductoItem>
+      </ul>
+
+    </div>
   </div>
 </template>

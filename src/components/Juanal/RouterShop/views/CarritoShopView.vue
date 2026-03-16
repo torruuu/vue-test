@@ -8,35 +8,45 @@ import { useRouter } from 'vue-router'
 const carro = useCarroStore()
 const { itemsCarro, total } = storeToRefs(carro)
 const router = useRouter();
-
-//AQUI IMPORTAMOS EL PRODUCTO ITEM, PORQUE HAY ELEMENTOS COMUNES Y LUEGO EN EL APARTADO TEMPLATE METEMOS EL SLOT ACCIONES. UNO CON DOS BOTONES, OTRO CON UNO.
-
 </script>
 
 <template>
-  <div class="max-w-2xl mx-auto p-6 mt-6">
-    <button @click="router.back()" class="mb-6 flex items-center gap-2 text-black-500 text-lg font-bold">
-  <ArrowLeft :size="18" />
-  Volver
-</button>
-    <h1 class="text-2xl font-bold mb-6">🛒 Tu carrito</h1>
+  <div class="min-h-screen bg-slate-800 p-8 pt-16">
+    <div class="max-w-2xl mx-auto">
 
-    <p v-if="itemsCarro.length === 0" class="text-gray-400">El carrito está vacío.</p>
+      <button @click="router.back()" class="mb-8 flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm font-medium">
+        <ArrowLeft :size="16" />
+        Volver a la tienda
+      </button>
 
-    <ul v-else class="flex flex-col gap-4">
-      <ProductoItem v-for="item in itemsCarro" :key="item.id" :product="item">
-        <template #acciones>
-          <span class="text-gray-500">x{{ item.cantidad }}</span>
-          <span class="font-bold">{{ (item.price * item.cantidad).toFixed(2) }} €</span>
-          <button @click="carro.removeItem(item.id)" class="text-red-400 hover:text-red-600">
-            <X :size="18" />
-          </button>
-        </template>
-      </ProductoItem>
-    </ul>
+      <div class="flex items-center gap-3 mb-8">
+        <h1 class="text-3xl font-bold text-white">Tu carrito</h1>
+        <span v-if="itemsCarro.length > 0" class="bg-slate-700 text-slate-300 text-xs font-medium px-2.5 py-1 rounded-full">
+          {{ itemsCarro.length }}
+        </span>
+      </div>
 
-    <div v-if="itemsCarro.length > 0" class="mt-6 border-t pt-4 text-right text-xl font-bold">
-      Total: {{ total }} €
+      <p v-if="itemsCarro.length === 0" class="text-slate-400 text-sm">
+        El carrito está vacío.
+      </p>
+
+      <ul v-else class="flex flex-col gap-3">
+        <ProductoItem v-for="item in itemsCarro" :key="item.id" :product="item">
+          <template #acciones>
+            <span class="text-slate-400 text-sm">x{{ item.cantidad }}</span>
+            <span class="font-bold text-slate-800">{{ (item.price * item.cantidad).toFixed(2) }} €</span>
+            <button @click="carro.removeItem(item.id)" class="text-red-400 hover:text-red-600 transition-colors">
+              <X :size="18" />
+            </button>
+          </template>
+        </ProductoItem>
+      </ul>
+
+      <div v-if="itemsCarro.length > 0" class="mt-6 bg-white rounded-2xl p-6 flex items-center justify-between">
+        <span class="text-slate-500 text-sm">Total a pagar</span>
+        <span class="text-2xl font-bold text-slate-800">{{ total }} €</span>
+      </div>
+
     </div>
   </div>
 </template>
