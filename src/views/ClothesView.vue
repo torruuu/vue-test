@@ -3,9 +3,9 @@ import ClothesCard from '@/components/Laura/Clothes_Shop/ClothesCard.vue'
 import { useProductos } from '@/composables/useProducts'
 import { ref, watch } from 'vue'
 
-const { productos, loading, error, cargarProductos, cargarMas } = useProductos()
+const { productos, loading, error, fetchData, cargarMas } = useProductos()
 
-cargarProductos()
+fetchData()
 
 const finalPagina = ref(null)
 

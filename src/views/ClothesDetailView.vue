@@ -3,14 +3,14 @@ import { useRoute } from 'vue-router'
 import { Heart, Undo2, Star } from 'lucide-vue-next'
 import { useCartStore } from '@/stores/cartStore'
 import { useFavoritesStore } from '@/stores/favoritesStore'
-import { useProducto } from '@/composables/useProducts'
+import { useProductos } from '@/composables/useProducts'
 
 const storeFav = useFavoritesStore()
 const store = useCartStore()
 const route = useRoute()
+const { producto, loading, error, fetchData } = useProductos()
 
-const { producto, loading, error, cargarProducto } = useProducto()
-cargarProducto(route.params.id)
+fetchData(route.params.id)
 
 function handleFavorite() {
     storeFav.marcarFavorito(producto.value)
@@ -27,9 +27,8 @@ function handleaddProduct() {
         <div v-else-if="producto">
             <div class="ml-12 mb-10">
                 <router-link to="/clothes" class="inline-block">
-                    <div class="w-12 h-12 flex items-center justify-center
-            bg-white/30 backdrop-blur-md rounded-full shadow-lg
-            hover:bg-white/40 transition">
+                    <div
+                        class="w-12 h-12 flex items-center justify-center bg-white/30 backdrop-blur-md rounded-full shadow-lg hover:bg-white/40 transition">
                         <Undo2 size="28" class="text-black" />
                     </div>
                 </router-link>
@@ -50,14 +49,13 @@ function handleaddProduct() {
                         <div class="mt-4 text-xl font-bold">{{ producto.price }} €</div>
                     </div>
                     <div class="flex mt-4 gap-4">
-                        <button @click="handleaddProduct" class="inline-block px-6 py-3 rounded-2xl bg-linear-to-br
-              from-green-500 to-green-300 text-black fill-black font-bold shadow-lg">
+                        <button @click="handleaddProduct"
+                            class="inline-block px-6 py-3 rounded-2xl bg-linear-to-br from-green-500 to-green-300 text-black fill-black font-bold shadow-lg">
                             AÑADIR
                         </button>
                         <button @click="handleFavorite" class="rounded-full p-3 bg-white font-bold shadow-lg">
-                            <Heart :class="storeFav.esFavorito(producto.id)
-                                ? 'text-red-500 fill-red-500'
-                                : 'text-gray-300 fill-gray-200'" />
+                            <Heart
+                                :class="storeFav.esFavorito(producto.id) ? 'text-red-500 fill-red-500' : 'text-gray-300 fill-gray-200'" />
                         </button>
                     </div>
                 </div>
