@@ -10,7 +10,7 @@ const store = useCartStore()
 const route = useRoute()
 const { producto, loading, error, fetchData } = useProductos()
 
-fetchData(route.params.id)
+fetchData("https://fakestoreapi.com/products/" + route.params.id)
 
 function handleFavorite() {
     storeFav.marcarFavorito(producto.value)

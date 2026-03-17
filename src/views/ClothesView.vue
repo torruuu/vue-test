@@ -3,15 +3,16 @@ import ClothesCard from '@/components/Laura/Clothes_Shop/ClothesCard.vue'
 import { useProductos } from '@/composables/useProducts'
 import { ref, watch } from 'vue'
 
+
 const { productos, loading, error, fetchData, cargarMas } = useProductos()
 
-fetchData()
+fetchData("https://fakestoreapi.com/products")
 
 const finalPagina = ref(null)
 
 const chivato = new IntersectionObserver((elementos) => {
     if (elementos[0].isIntersecting && !loading.value) {
-        cargarMas()
+        cargarMas("https://fakestoreapi.com/products")
     }
 })
 
