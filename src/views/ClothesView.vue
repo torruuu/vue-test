@@ -3,16 +3,17 @@ import ClothesCard from '@/components/Laura/Clothes_Shop/ClothesCard.vue'
 import { useProductos } from '@/composables/useProducts'
 import { ref, watch } from 'vue'
 
+const { productos, loading, error, fetchData, cargarMas, BASE_URL } = useProductos()
 
-const { productos, loading, error, fetchData, cargarMas } = useProductos()
-
-fetchData("https://fakestoreapi.com/products")
+const limit = ref(6)
+fetchData(BASE_URL)
 
 const finalPagina = ref(null)
 
 const chivato = new IntersectionObserver((elementos) => {
     if (elementos[0].isIntersecting && !loading.value) {
-        cargarMas("https://fakestoreapi.com/products")
+        limit.value += 3
+        cargarMas(limit.value)
     }
 })
 
@@ -24,12 +25,12 @@ watch(finalPagina, (ultimaFila) => {
 <template>
     <div class="py-32 px-32">
         <div class="flex flex-col items-center">
-            <div v-if="loading && productos.length === 0" class="text-2xl">Cargando...</div>
+            <div v-if="loading && !productos" class="text-2xl">Cargando...</div>
             <div v-else-if="error" class="text-2xl">{{ error }}</div>
             <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <ClothesCard v-for="producto in productos" :key="producto.id" :producto="producto" />
             </div>
-            <div v-if="loading && productos.length > 0" class="mt-6 text-gray-400">
+            <div v-if="loading && productos" class="mt-6 text-gray-400">
                 Cargando más...
             </div>
             <div ref="finalPagina" class="h-1 w-full mt-10"></div>

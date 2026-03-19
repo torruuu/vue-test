@@ -4,6 +4,7 @@ import ClothesView from "@/views/ClothesView.vue"
 import CartShopView from "@/views/CartShopView.vue"
 import NotFoundView from "@/views/NotFoundView.vue"
 import FavoritesView from "@/views/FavoritesView.vue"
+import CreateProductView from "@/views/CreateProductView.vue"
 
 const routes = [
   {
@@ -29,6 +30,11 @@ const routes = [
     path: "/favorites",
     name: "favorites",
     component: FavoritesView,
+  },
+  {
+    path: "/create-product",
+    name: "create",
+    component: CreateProductView,
   },
   {
     path: "/:pathMatch(.*)*",
