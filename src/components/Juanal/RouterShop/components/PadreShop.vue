@@ -1,13 +1,13 @@
 <script setup>
 import ProductCardShop from './ProductCardShop.vue'
 import { onMounted } from 'vue'
-import { useProductos } from "../composables/useProducts.js"
+import { usefetchApi } from "../composables/useProducts.js"
 import { useFavoritesStore } from '../stores/favoritesStore.js'
 import { Heart } from 'lucide-vue-next'
 
 const favorites = useFavoritesStore()
-const { data, loading, error, fetchData, cargarMas, BASE_URL } = useProductos()
-onMounted(() => fetchData(BASE_URL, { limit: 6 }))
+const { data, loading, error, fetchData, cargarMas} = usefetchApi()
+onMounted(() => fetchData(`/products`, {limit:6}))
 </script>
 
 <template>
@@ -26,11 +26,9 @@ onMounted(() => fetchData(BASE_URL, { limit: 6 }))
             v-for="product in data"
             :key="product.id"
             :id="product.id"
-            :title="product.title"
-            :price="product.price"
+            :name="product.name"
+            :price="parseFloat(product.price)"
             :description="product.description"
-            :image="product.image"
-            :rating="product.rating"
           >
             <template #acciones>
               <button

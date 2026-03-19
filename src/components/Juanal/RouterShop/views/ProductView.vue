@@ -1,24 +1,18 @@
 <script setup>
-import { computed, onMounted } from "vue"
-import { useProductos } from "../composables/useProducts.js"
+import { onMounted } from "vue"
+import { usefetchApi } from "../composables/useProducts.js"
 import { useCarroStore } from '../stores/carroStore.js'
 import { useFavoritesStore } from '../stores/favoritesStore.js'
 import { useRoute, useRouter } from "vue-router"
-import { Heart, Star, ArrowLeft } from "lucide-vue-next"
+import { Heart, ArrowLeft } from "lucide-vue-next"
 
 const route = useRoute()
 const router = useRouter()
 const carro = useCarroStore()
 const favorites = useFavoritesStore()
-const { data, loading, error, fetchData, BASE_URL } = useProductos()
-onMounted(() => fetchData(`${BASE_URL}/${route.params.id}`))
+const { data, loading, error, fetchData} = usefetchApi()
+onMounted(() => fetchData(`/products/${route.params.id}`))
 
-const stars = computed(() => {
-  const rate = data.value?.rating?.rate ?? 0
-  const maxStars = 5
-  const normalized = Math.round((rate / 5) * maxStars)
-  return Array.from({ length: maxStars }, (_, i) => i < normalized)
-})
 
 function addItem(product) {
   carro.addItem(product)
@@ -44,20 +38,19 @@ function removeFavorite(product) {
       <div v-else>
         <div v-if="data" class="bg-white rounded-2xl p-10 flex gap-10 w-full">
           <div class="w-72 h-72 min-w-72 flex items-center justify-center overflow-hidden rounded-xl bg-slate-100">
-            <img :src="data.image" :alt="data.title" class="max-w-full max-h-full object-contain" />
+            <img 
+    src="https://placehold.co/288x288?text=IMG disponible proximamente" 
+    :alt="data.name" 
+    class="max-w-full max-h-full object-contain"
+  />
           </div>
 
           <div class="flex flex-col justify-center gap-4 flex-1">
             <p class="text-xs text-slate-400 uppercase tracking-widest">{{ data.category }}</p>
-            <h1 class="text-2xl font-bold text-slate-800">{{ data.title }}</h1>
+            <h1 class="text-2xl font-bold text-slate-800">{{ data.name }}</h1>
             <p class="text-gray-500 text-sm leading-relaxed">{{ data.description }}</p>
             <div class="text-3xl font-bold text-slate-800">{{ data.price }} €</div>
-            <div class="flex items-center gap-1">
-              <Star v-for="(filled, i) in stars" :key="i" :size="18"
-                :fill="filled ? '#facc15' : 'none'"
-                :stroke="filled ? '#facc15' : '#d1d5db'" />
-              <span class="text-sm text-gray-400 ml-2">({{ data.rating?.count }} valoraciones)</span>
-            </div>
+            
 
             <div class="flex gap-4 mt-4">
               <button @click="addItem(data)" class="flex items-center gap-2 bg-slate-800 text-white rounded-xl px-6 py-3 hover:bg-slate-700 transition-colors">

@@ -5,6 +5,7 @@ import PadreShop from "@/components/Juanal/RouterShop/components/PadreShop.vue"
 import ProductView from "@/components/Juanal/RouterShop/views/ProductView.vue"
 import CarritoShopView from "@/components/Juanal/RouterShop/views/CarritoShopView.vue"
 import FavoritosView from "@/components/Juanal/RouterShop/views/FavoritosView.vue"
+import CreateProductView from "@/components/Juanal/RouterShop/views/CreateProductView.vue"
 //import ProductCardShop from "@/components/Juanal/RouterShop/ProductCardShop.vue";
 //2. CREAMOS ARRAY DE RUTAS. OBJETO CON 3 ELEMENTOS: PATH - URL / NAME - ALIAS INTERNO - COMPONENT - COMPONENTE QUE MUESTRA.
 const routes = [
@@ -13,6 +14,11 @@ const routes = [
   { path: "/clothes/:id", name: "view", component: ProductView },
   { path: "/carrito", name: "carrito", component: CarritoShopView },
   { path: "/favoritos", name: "favoritos", component: FavoritosView },
+  {
+    path: "/create-product",
+    name: "create-product",
+    component: CreateProductView,
+  },
 ]
 // 3. CREAMOS ROUTER. LE PASAMOS EL HISTORIAL Y LAS RUTAS.
 const router = createRouter({
