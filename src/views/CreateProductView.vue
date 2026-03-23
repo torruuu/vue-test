@@ -7,7 +7,7 @@ import { useI18n } from 'vue-i18n'
 
 const { t: traducir } = useI18n()
 const router = useRouter()
-const { postData, loading, error, BASE_URL } = useProductos()
+const { postData, loading, error } = useProductos()
 
 const form = ref({
   name: '',
@@ -22,7 +22,7 @@ async function handleSubmit() {
     toast.error(traducir('createProduct.validation'))
     return
   }
-  const data = await postData(BASE_URL, form.value)
+  const data = await postData("/products", form.value)
   if (data) {
     toast.success(traducir('createProduct.success'))
     router.push('/clothes')

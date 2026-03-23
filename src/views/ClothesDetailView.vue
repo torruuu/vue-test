@@ -8,9 +8,9 @@ import { useProductos } from '@/composables/useProducts'
 const storeFav = useFavoritesStore()
 const store = useCartStore()
 const route = useRoute()
-const { productos, loading, error, fetchData, BASE_URL } = useProductos()
+const { productos, loading, error, fetchData } = useProductos()
 
-fetchData(BASE_URL + "/" + route.params.id)
+fetchData("/products/" + route.params.id)
 
 function handleFavorite() {
     storeFav.marcarFavorito(productos.value)
@@ -27,7 +27,8 @@ function handleaddProduct() {
         <div v-else-if="productos">
             <div class="ml-12 mb-10">
                 <router-link to="/clothes" class="inline-block">
-                    <div class="w-12 h-12 flex items-center justify-center bg-white/30 backdrop-blur-md rounded-full shadow-lg hover:bg-white/40 transition">
+                    <div
+                        class="w-12 h-12 flex items-center justify-center bg-white/30 backdrop-blur-md rounded-full shadow-lg hover:bg-white/40 transition">
                         <Undo2 size="28" class="text-black" />
                     </div>
                 </router-link>
@@ -50,7 +51,8 @@ function handleaddProduct() {
                             AÑADIR
                         </button>
                         <button @click="handleFavorite" class="rounded-full p-3 bg-white font-bold shadow-lg">
-                            <Heart :class="storeFav.esFavorito(productos.id) ? 'text-red-500 fill-red-500' : 'text-gray-300 fill-gray-200'" />
+                            <Heart
+                                :class="storeFav.esFavorito(productos.id) ? 'text-red-500 fill-red-500' : 'text-gray-300 fill-gray-200'" />
                         </button>
                     </div>
                 </div>

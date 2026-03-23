@@ -1,36 +1,40 @@
 import { ref } from "vue"
 import { fetchApi } from "@/api/api.js"
 
-const BASE_URL = "http://localhost:4000/products"
+const BASE_URL = "http://localhost:4000" // sin /products
 
 export function useProductos() {
   const productos = ref(null)
   const loading = ref(false)
   const error = ref(null)
 
-  async function fetchData(url, params) {
+  async function fetchData(endpoint, params = {}) {
     loading.value = true
-    const { data, error: err } = await fetchApi(url, params)
+    const { data, error: err } = await fetchApi(BASE_URL + endpoint, params)
     productos.value = data
     error.value = err
     loading.value = false
   }
 
-  async function postData(url, body) {
+  async function postData(endpoint, body) {
     loading.value = true
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    })
-    const data = await response.json()
+    const { data, error: err } = await fetchApi(
+      BASE_URL + endpoint,
+      {},
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: body,
+      },
+    )
     loading.value = false
+    error.value = err
     return data
   }
 
   async function cargarMas(limit) {
-    await fetchData(BASE_URL, { limit: limit })
+    await fetchData("/products", { limit })
   }
 
-  return { productos, loading, error, fetchData, postData, cargarMas, BASE_URL }
+  return { productos, loading, error, fetchData, postData, cargarMas } // ya no exporta BASE_URL
 }
